@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #4 — Birthday Mini-Game Quest 🎮 | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Reuse Main Glassmorphism Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .gift-page-container {
+            min-height: 100vh;
+            padding: 100px 20px 80px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: rgba(233, 30, 99, 0.1);
+            color: var(--color-cherry-pink);
+            border: 1px solid rgba(233, 30, 99, 0.2);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .page-title {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: var(--color-deep-cherry);
+            opacity: 0.85;
+        }
+
+        /* Level Indicator Progress Bar */
+        .level-tracker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .level-tracker::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(233, 30, 99, 0.15);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .level-tracker-progress {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 3px;
+            background: var(--color-cherry-pink);
+            transform: translateY(-50%);
+            z-index: 0;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        .level-step {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--glass-bg-solid);
+            border: 2px solid var(--glass-border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--color-deep-cherry);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .level-step.active {
+            border-color: var(--color-cherry-pink);
+            background: var(--color-cherry-pink);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(233, 30, 99, 0.4);
+            transform: scale(1.1);
+        }
+
+        .level-step.completed {
+            background: var(--color-soft-rose);
+            border-color: var(--color-cherry-pink);
+            color: var(--color-dark-cherry);
+        }
+
+        /* Main Game Screen Container */
+        .game-card {
+            background: var(--glass-bg-primary);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid var(--glass-border-light);
+            border-radius: 32px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-retina-lg);
+            width: 100%;
+            text-align: center;
+            animation: modalPopIn 0.6s var(--transition-apple-spring) forwards;
+        }
+
+        .game-level-title {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.5rem;
+        }
+
+        .game-desc {
+            font-size: 0.98rem;
+            color: var(--color-deep-cherry);
+            margin-bottom: 2rem;
+        }
+
+        /* Option Buttons Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--glass-border-light);
+            padding: 1rem;
+            border-radius: 20px;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-dark-cherry);
+            cursor: pointer;
+            transition: all 0.3s var(--transition-apple-spring);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .option-btn:hover {
+            background: var(--glass-bg-hover);
+            transform: translateY(-3px) scale(1.02);
+            border-color: var(--glass-border-glow);
+            box-shadow: var(--shadow-retina-sm);
+        }
+
+        .option-btn.correct {
+            background: rgba(76, 175, 80, 0.2) !important;
+            border-color: #4CAF50 !important;
+            color: #2E7D32 !important;
+        }
+
+        .option-btn.wrong {
+            background: rgba(244, 67, 54, 0.2) !important;
+            border-color: #F44336 !important;
+            color: #C62828 !important;
+        }
+
+        /* Memory Game Cards Grid */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 480px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .memory-card {
+            aspect-ratio: 1 / 1;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--glass-border-light);
+            border-radius: 16px;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.4s var(--transition-apple-spring);
+            transform-style: preserve-3d;
+            user-select: none;
+        }
+
+        .memory-card.flipped {
+            background: var(--color-pure-white);
+            transform: rotateY(180deg);
+            border-color: var(--glass-border-glow);
+        }
+
+        .feedback-text {
+            min-height: 24px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            color: var(--color-cherry-pink);
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .memory-grid { grid-template-columns: repeat(3, 1fr); }
+            .page-title { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Background -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Glowing Orbs -->
+    <div class="ambient-glows" aria-hidden="true">
+        <div class="orb orb-pale"></div>
+        <div class="orb orb-cherry"></div>
+        <div class="orb orb-white"></div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-nav">
+        <a href="index.html" class="ios-glass-btn secondary" style="padding: 10px 20px; font-size: 0.9rem;">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="gift-page-container">
+        <header class="page-header">
+            <span class="page-badge">Gift #4 • Chapter Fifteen</span>
+            <h1 class="page-title">Navanshi’s Birthday Quest 🎮</h1>
+            <p class="page-subtitle">Complete all 3 fun levels to unlock the 15th Birthday Crown!</p>
+        </header>
+
+        <!-- Progress Steps -->
+        <div class="level-tracker">
+            <div class="level-tracker-progress" id="trackerProgress"></div>
+            <div class="level-step active" id="step1">1</div>
+            <div class="level-step" id="step2">2</div>
+            <div class="level-step" id="step3">3</div>
+        </div>
+
+        <!-- Level Container -->
+        <div class="game-card" id="gameCard">
+            <!-- Dynamic Content loaded via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Script connection -->
+    <script src="script.js"></script>
+
+    <script>
+        let currentLevel = 1;
+
+        // Level 2 Memory Game Variables
+        const memorySymbols = ['👑', '🌸', '🎂', '✨', '👑', '🌸', '🎂', '✨'];
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadLevel(1);
+        });
+
+        function updateProgress(level) {
+            const trackerProgress = document.getElementById("trackerProgress");
+            const step1 = document.getElementById("step1");
+            const step2 = document.getElementById("step2");
+            const step3 = document.getElementById("step3");
+
+            step1.className = "level-step " + (level > 1 ? "completed" : "active");
+            step2.className = "level-step " + (level === 2 ? "active" : level > 2 ? "completed" : "");
+            step3.className = "level-step " + (level === 3 ? "active" : "");
+
+            if (level === 1) trackerProgress.style.width = "0%";
+            else if (level === 2) trackerProgress.style.width = "50%";
+            else if (level === 3) trackerProgress.style.width = "100%";
+        }
+
+        function loadLevel(level) {
+            currentLevel = level;
+            updateProgress(level);
+            const card = document.getElementById("gameCard");
+
+            if (level === 1) {
+                // LEVEL 1: Quick Birthday Trivia
+                card.innerHTML = `
+                    <h2 class="game-level-title">Level 1: The Birthday Warmup 🌸</h2>
+                    <p class="game-desc">What makes today (turning 15) the absolute best day ever?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="handleL1Answer(false, this)">A) Just another ordinary day 😴</button>
+                        <button class="option-btn" onclick="handleL1Answer(true, this)">B) Navanshi turning 15! 🎉</button>
+                        <button class="option-btn" onclick="handleL1Answer(false, this)">C) Getting free dessert 🍰</button>
+                        <button class="option-btn" onclick="handleL1Answer(false, this)">D) Sleeping in late 🛌</button>
+                    </div>
+                    <div class="feedback-text" id="feedbackText">Select the correct answer to unlock Level 2!</div>
+                `;
+            } else if (level === 2) {
+                // LEVEL 2: Matching Pairs Memory Mini-Game
+                // Shuffle symbols
+                const shuffled = [...memorySymbols].sort(() => Math.random() - 0.5);
+                matchedPairs = 0;
+                flippedCards = [];
+
+                card.innerHTML = `
+                    <h2 class="game-level-title">Level 2: Memory Match 💕</h2>
+                    <p class="game-desc">Match all 4 pairs of icons to clear this level!</p>
+                    <div class="memory-grid" id="memoryGrid">
+                        ${shuffled.map((symbol, index) => `
+                            <div class="memory-card" data-symbol="${symbol}" data-index="${index}" onclick="handleCardClick(this)">
+                                ❓
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="feedback-text" id="feedbackText">Find all matching pairs!</div>
+                `;
+            } else if (level === 3) {
+                // LEVEL 3: Speed Tap Challenge
+                card.innerHTML = `
+                    <h2 class="game-level-title">Level 3: Tap 15 Birthday Candles 🎂</h2>
+                    <p class="game-desc">Tap the button 15 times as fast as you can to claim your crown!</p>
+                    <div style="font-size: 3.5rem; margin-bottom: 1rem;" id="candleIcon">🎂</div>
+                    <button class="ios-glass-btn primary" id="tapBtn" onclick="handleTapCount()" style="padding: 15px 40px; font-size: 1.2rem;">
+                        TAP ME! (0/15)
+                    </button>
+                    <div class="feedback-text" id="feedbackText">Get ready... Tap!</div>
+                `;
+            } else if (level === 4) {
+                // WINNING SCREEN
+                card.innerHTML = `
+                    <div style="font-size: 4.5rem; margin-bottom: 0.8rem;">👑</div>
+                    <h2 class="game-level-title">QUEEN OF THE DAY!</h2>
+                    <p class="game-desc">Congratulations Navanshi! You completed all 3 levels with flying colors!</p>
+                    <button class="ios-glass-btn primary" onclick="location.href='index.html'" style="padding: 12px 30px;">
+                        Return to Main Dashboard
+                    </button>
+                `;
+                if (typeof triggerConfettiBurst === "function") {
+                    triggerConfettiBurst();
+                }
+            }
+        }
+
+        // LEVEL 1 LOGIC
+        function handleL1Answer(isCorrect, btn) {
+            const feedback = document.getElementById("feedbackText");
+            if (isCorrect) {
+                btn.classList.add("correct");
+                feedback.style.color = "#4CAF50";
+                feedback.innerText = "Correct! Moving to Level 2... ✨";
+                if (typeof triggerConfettiBurst === "function") triggerConfettiBurst();
+                setTimeout(() => loadLevel(2), 1200);
+            } else {
+                btn.classList.add("wrong");
+                feedback.style.color = "#F44336";
+                feedback.innerText = "Nope! Try again 💕";
+                setTimeout(() => btn.classList.remove("wrong"), 800);
+            }
+        }
+
+        // LEVEL 2 LOGIC
+        function handleCardClick(card) {
+            if (flippedCards.length === 2 || card.classList.contains("flipped") || card.classList.contains("matched")) return;
+
+            const symbol = card.getAttribute("data-symbol");
+            card.classList.add("flipped");
+            card.innerText = symbol;
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                const [card1, card2] = flippedCards;
+                if (card1.getAttribute("data-symbol") === card2.getAttribute("data-symbol")) {
+                    card1.classList.add("matched");
+                    card2.classList.add("matched");
+                    matchedPairs++;
+                    flippedCards = [];
+
+                    if (matchedPairs === 4) {
+                        document.getElementById("feedbackText").innerText = "Awesome memory! Unlocking Final Level... 🎉";
+                        if (typeof triggerConfettiBurst === "function") triggerConfettiBurst();
+                        setTimeout(() => loadLevel(3), 1200);
+                    }
+                } else {
+                    setTimeout(() => {
+                        card1.classList.remove("flipped");
+                        card2.classList.remove("flipped");
+                        card1.innerText = "❓";
+                        card2.innerText = "❓";
+                        flippedCards = [];
+                    }, 800);
+                }
+            }
+        }
+
+        // LEVEL 3 LOGIC
+        let tapCount = 0;
+        function handleTapCount() {
+            tapCount++;
+            const tapBtn = document.getElementById("tapBtn");
+            const feedback = document.getElementById("feedbackText");
+
+            tapBtn.innerText = `TAP ME! (${tapCount}/15)`;
+            
+            if (tapCount >= 15) {
+                feedback.innerText = "COMPLETED! YOU WIN! 🎉";
+                tapBtn.disabled = true;
+                setTimeout(() => loadLevel(4), 1000);
+            }
+        }
+    </script>
+</body>
+</html>
