@@ -1,1 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #5 — Special Voice Messages | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f051d;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Star & Wave Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .gift-container {
+            min-height: 100vh;
+            padding: 100px 20px 80px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            border-color: rgba(255, 182, 193, 0.6);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(233, 30, 99, 0.3));
+            color: #ffb6c1;
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #ffffff, #ffb6c1, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: #fce4ec;
+            opacity: 0.85;
+        }
+
+        /* Voice List Container */
+        .voice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+            width: 100%;
+        }
+
+        .voice-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
+            border: 1px solid rgba(255, 192, 203, 0.25);
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .voice-card:hover {
+            border-color: rgba(255, 105, 180, 0.5);
+            box-shadow: 0 20px 45px rgba(255, 105, 180, 0.2);
+        }
+
+        .voice-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .avatar-circle {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff69b4, #8a2be2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+            flex-shrink: 0;
+        }
+
+        .voice-meta {
+            flex-grow: 1;
+        }
+
+        .speaker-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .speaker-relation {
+            font-size: 0.9rem;
+            color: #ffb6c1;
+            font-weight: 500;
+        }
+
+        /* Soundwave animation bars */
+        .soundwave {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            height: 25px;
+        }
+
+        .wave-bar {
+            width: 4px;
+            height: 8px;
+            background: rgba(255, 182, 193, 0.5);
+            border-radius: 4px;
+            transition: height 0.2s ease;
+        }
+
+        .voice-card.playing .wave-bar {
+            background: #ff69b4;
+            animation: waveBounce 1s ease-in-out infinite alternate;
+        }
+
+        .voice-card.playing .wave-bar:nth-child(1) { animation-delay: 0.1s; }
+        .voice-card.playing .wave-bar:nth-child(2) { animation-delay: 0.3s; }
+        .voice-card.playing .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .voice-card.playing .wave-bar:nth-child(4) { animation-delay: 0.4s; }
+        .voice-card.playing .wave-bar:nth-child(5) { animation-delay: 0.15s; }
+
+        @keyframes waveBounce {
+            0% { height: 6px; }
+            100% { height: 24px; }
+        }
+
+        /* Player Controls Inside Card */
+        .player-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 18px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .play-voice-btn {
+            background: linear-gradient(135deg, #ff69b4, #e91e63);
+            border: none;
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .play-voice-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ffb6c1, #ff69b4);
+            border-radius: 10px;
+        }
+
+        .time-display {
+            font-size: 0.82rem;
+            color: #ffb6c1;
+            font-weight: 600;
+            min-width: 45px;
+            text-align: right;
+        }
+
+        .note-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 182, 193, 0.3);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            font-style: italic;
+            color: #fce4ec;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 2.1rem; }
+            .voice-card { padding: 1.4rem; }
+            .avatar-circle { width: 52px; height: 52px; font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Starfield & Waves Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <div class="back-nav">
+        <a href="index.html" class="glass-btn">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="gift-container">
+        <header class="page-header">
+            <span class="page-badge">Gift #5 • Audio Messages</span>
+            <h1 class="page-title">Voice Messages Lounge 🎙️</h1>
+            <p class="page-subtitle">Listen to recorded birthday wishes sent specially for you!</p>
+        </header>
+
+        <div class="voice-list">
+
+            <!-- VOICE MESSAGE 1: YOUR MESSAGE -->
+            <div class="voice-card" id="card1">
+                <div class="voice-header">
+                    <div class="avatar-circle">💌</div>
+                    <div class="voice-meta">
+                        <div class="speaker-name">From Me</div>
+                        <div class="speaker-relation">Your Special Birthday Wish</div>
+                    </div>
+                    <div class="soundwave">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                </div>
+
+                <div class="player-row">
+                    <button class="play-voice-btn" onclick="toggleVoice(1)">▶</button>
+                    <div class="progress-bar" onclick="seekVoice(event, 1)">
+                        <div class="progress-fill" id="fill1"></div>
+                    </div>
+                    <div class="time-display" id="time1">0:00</div>
+                </div>
+
+                <div class="note-box">
+                    "💬 Add a written note or transcription for your voice message here!"
+                </div>
+                <audio id="audio1" src="voice1.mp3"></audio>
+            </div>
+
+            <!-- VOICE MESSAGE 2: MOM'S MESSAGE -->
+            <div class="voice-card" id="card2">
+                <div class="voice-header">
+                    <div class="avatar-circle">👩‍👧</div>
+                    <div class="voice-meta">
+                        <div class="speaker-name">From Mom</div>
+                        <div class="speaker-relation">Warm Birthday Blessing</div>
+                    </div>
+                    <div class="soundwave">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                </div>
+
+                <div class="player-row">
+                    <button class="play-voice-btn" onclick="toggleVoice(2)">▶</button>
+                    <div class="progress-bar" onclick="seekVoice(event, 2)">
+                        <div class="progress-fill" id="fill2"></div>
+                    </div>
+                    <div class="time-display" id="time2">0:00</div>
+                </div>
+
+                <div class="note-box">
+                    "💬 Add a written note or transcription for Mom's voice message here!"
+                </div>
+                <audio id="audio2" src="voice2.mp3"></audio>
+            </div>
+
+            <!-- VOICE MESSAGE 3: SISTER'S MESSAGE -->
+            <div class="voice-card" id="card3">
+                <div class="voice-header">
+                    <div class="avatar-circle">👭</div>
+                    <div class="voice-meta">
+                        <div class="speaker-name">From Sister</div>
+                        <div class="speaker-relation">Sweet Birthday Note</div>
+                    </div>
+                    <div class="soundwave">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                </div>
+
+                <div class="player-row">
+                    <button class="play-voice-btn" onclick="toggleVoice(3)">▶</button>
+                    <div class="progress-bar" onclick="seekVoice(event, 3)">
+                        <div class="progress-fill" id="fill3"></div>
+                    </div>
+                    <div class="time-display" id="time3">0:00</div>
+                </div>
+
+                <div class="note-box">
+                    "💬 Add a written note or transcription for Sister's voice message here!"
+                </div>
+                <audio id="audio3" src="voice3.mp3"></audio>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        /* --- STARS & WAVE CANVAS ANIMATION --- */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height, stars = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((width * height) / 3000);
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005,
+                    twinkleDir: Math.random() > 0.5 ? 1 : -1
+                });
+            }
+        }
+
+        function drawBackground() {
+            const grad = ctx.createLinearGradient(0, 0, 0, height);
+            grad.addColorStop(0, '#0f051d');
+            grad.addColorStop(0.5, '#1a0933');
+            grad.addColorStop(1, '#090212');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed * star.twinkleDir;
+                if (star.alpha >= 1) { star.alpha = 1; star.twinkleDir = -1; }
+                if (star.alpha <= 0.2) { star.alpha = 0.2; star.twinkleDir = 1; }
+
+                ctx.save();
+                ctx.globalAlpha = star.alpha;
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#ffb6c1';
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            const time = Date.now() * 0.001;
+            drawWave(time, 0.002, 40, '#ff1493', 0.08);
+            drawWave(time + 2, 0.003, 30, '#8a2be2', 0.06);
+
+            requestAnimationFrame(drawBackground);
+        }
+
+        function drawWave(time, speed, amplitude, color, alpha) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(0, height * 0.7);
+            for (let x = 0; x <= width; x += 10) {
+                const y = Math.sin(x * speed + time) * amplitude + Math.cos(x * 0.001 + time) * (amplitude / 2) + (height * 0.7);
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.globalAlpha = alpha;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        drawBackground();
+
+        /* --- AUDIO PLAYER CONTROL LOGIC --- */
+        let activeAudioId = null;
+
+        function toggleVoice(id) {
+            const audio = document.getElementById(`audio${id}`);
+            const card = document.getElementById(`card${id}`);
+            const btn = card.querySelector('.play-voice-btn');
+
+            if (activeAudioId && activeAudioId !== id) {
+                // Pause other active audio
+                const otherAudio = document.getElementById(`audio${activeAudioId}`);
+                const otherCard = document.getElementById(`card${activeAudioId}`);
+                otherAudio.pause();
+                otherCard.classList.remove('playing');
+                otherCard.querySelector('.play-voice-btn').innerText = '▶';
+            }
+
+            if (audio.paused) {
+                audio.play().then(() => {
+                    card.classList.add('playing');
+                    btn.innerText = '⏸';
+                    activeAudioId = id;
+                }).catch(() => {
+                    // Fallback visual toggle if mp3 missing
+                    card.classList.toggle('playing');
+                    btn.innerText = card.classList.contains('playing') ? '⏸' : '▶';
+                    activeAudioId = id;
+                });
+            } else {
+                audio.pause();
+                card.classList.remove('playing');
+                btn.innerText = '▶';
+            }
+        }
+
+        [1, 2, 3].forEach(id => {
+            const audio = document.getElementById(`audio${id}`);
+            const fill = document.getElementById(`fill${id}`);
+            const timeDisp = document.getElementById(`time${id}`);
+            const card = document.getElementById(`card${id}`);
+            const btn = card.querySelector('.play-voice-btn');
+
+            audio.ontimeupdate = () => {
+                if (audio.duration) {
+                    const pct = (audio.currentTime / audio.duration) * 100;
+                    fill.style.width = pct + '%';
+                    
+                    const mins = Math.floor(audio.currentTime / 60);
+                    const secs = Math.floor(audio.currentTime % 60);
+                    timeDisp.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                }
+            };
+
+            audio.onended = () => {
+                card.classList.remove('playing');
+                btn.innerText = '▶';
+                fill.style.width = '0%';
+            };
+        });
+
+        function seekVoice(e, id) {
+            const audio = document.getElementById(`audio${id}`);
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const pct = clickX / rect.width;
+            if (audio.duration) {
+                audio.currentTime = pct * audio.duration;
+            }
+        }
+    </script>
+</body>
+</html>
