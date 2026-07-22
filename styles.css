@@ -1,41 +1,66 @@
 /* ==========================================================================
-   1. DESIGN SYSTEM & APPLE PALETTE (PALES, DULL PINKS & CHERRY PINKS)
+   NAVANSHI'S 15TH BIRTHDAY EXPERIENCE ENGINE - AAA RETINA GRAPHICS SYSTEM
+   Architecture: Apple VisionOS Volumetric Glass + Dynamic Photonic Shader System
+   ========================================================================== */
+
+/* ==========================================================================
+   1. DESIGN SYSTEM & COLOR PALETTE
    ========================================================================== */
 :root {
-    /* Color Palette */
+    /* Photonic Color Palette */
     --color-pale-pink: #FFF0F5;
     --color-dull-pink: #F8BBD0;
     --color-soft-rose: #F48FB1;
     --color-cherry-pink: #E91E63;
     --color-deep-cherry: #C2185B;
     --color-dark-cherry: #880E4F;
+    --color-plum-dark: #2C0D2E;
+    --color-plum-midnight: #0B0210;
     --color-pure-white: #FFFFFF;
 
-    /* Glassmorphism System */
-    --glass-bg-primary: rgba(255, 255, 255, 0.35);
-    --glass-bg-hover: rgba(255, 255, 255, 0.55);
-    --glass-bg-solid: rgba(255, 240, 245, 0.85);
-    --glass-border-light: rgba(255, 255, 255, 0.65);
-    --glass-border-glow: rgba(233, 30, 99, 0.35);
+    /* Advanced VisionOS Glassmorphism Tokens */
+    --glass-bg-primary: rgba(255, 255, 255, 0.12);
+    --glass-bg-hover: rgba(255, 255, 255, 0.22);
+    --glass-bg-active: rgba(255, 255, 255, 0.30);
+    --glass-bg-solid: rgba(26, 10, 42, 0.75);
+    
+    /* Photonic Borders & Specular Highlights */
+    --glass-border-light: rgba(255, 255, 255, 0.25);
+    --glass-border-glow: rgba(244, 143, 177, 0.6);
+    --glass-specular-top: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(233, 30, 99, 0.2) 100%);
 
-    /* Retina & Depth Shadows */
-    --shadow-retina-sm: 0 4px 16px -2px rgba(233, 30, 99, 0.12);
-    --shadow-retina-md: 0 12px 32px -4px rgba(233, 30, 99, 0.18), 0 4px 12px rgba(0, 0, 0, 0.05);
-    --shadow-retina-lg: 0 24px 60px -8px rgba(194, 24, 91, 0.28), 0 8px 24px rgba(0, 0, 0, 0.08);
-    --shadow-glow-cherry: 0 0 35px rgba(233, 30, 99, 0.45);
+    /* Volumetric Shadows & Light Bleed */
+    --shadow-retina-sm: 0 4px 20px -2px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(233, 30, 99, 0.15);
+    --shadow-retina-md: 0 12px 40px -4px rgba(0, 0, 0, 0.35), 0 4px 16px rgba(233, 30, 99, 0.25);
+    --shadow-retina-lg: 0 28px 80px -12px rgba(0, 0, 0, 0.5), 0 8px 32px rgba(233, 30, 99, 0.35);
+    
+    --shadow-glow-cherry: 0 0 30px rgba(233, 30, 99, 0.5), 0 0 60px rgba(244, 143, 177, 0.3);
+    --shadow-glow-cyan: 0 0 25px rgba(128, 222, 234, 0.4);
 
     /* Typography */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
     --font-serif: 'Playfair Display', Georgia, serif;
     --font-heading: 'Cinzel', serif;
 
-    /* Smooth Transitions */
-    --transition-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    --transition-apple-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    /* Apple Fluid Physics Springs */
+    --ease-spring-1: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-spring-2: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-apple-smooth: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* ==========================================================================
-   2. GLOBAL RESETS & CANVAS SETUP
+   2. CUSTOM CURSOR SYSTEM
+   ========================================================================== */
+* {
+    cursor: default;
+}
+
+button, a, .glass-card, .nav-icon-btn {
+    cursor: pointer !important;
+}
+
+/* ==========================================================================
+   3. GLOBAL RESETS & ENGINE CORE
    ========================================================================== */
 *, *::before, *::after {
     margin: 0;
@@ -43,6 +68,7 @@
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    user-select: none;
 }
 
 html, body {
@@ -50,11 +76,12 @@ html, body {
     height: 100%;
     overflow-x: hidden;
     font-family: var(--font-sans);
-    background-color: var(--color-pale-pink);
-    color: var(--color-dark-cherry);
+    background-color: var(--color-plum-midnight);
+    color: var(--color-pale-pink);
+    position: relative;
 }
 
-/* Particle Canvas Backdrop */
+/* Canvas Deep Layer */
 #ambient-canvas {
     position: fixed;
     top: 0;
@@ -65,7 +92,7 @@ html, body {
     pointer-events: none;
 }
 
-/* Floating Ambient Orbs */
+/* Photonic Ambient Volumetric Light Orbs */
 .ambient-glows {
     position: fixed;
     top: 0;
@@ -75,43 +102,45 @@ html, body {
     z-index: 1;
     pointer-events: none;
     overflow: hidden;
-    filter: blur(80px);
+    filter: blur(90px);
+    mix-blend-mode: screen;
 }
 
 .orb {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.6;
-    animation: floatOrb 22s infinite alternate ease-in-out;
+    opacity: 0.5;
+    animation: floatVolumetricOrb 25s infinite alternate var(--ease-apple-smooth);
+    will-change: transform, opacity;
 }
 
 .orb-pale {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, var(--color-dull-pink), transparent);
-    top: -10%;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, var(--color-soft-rose) 0%, transparent 70%);
+    top: -15%;
     left: -10%;
 }
 
 .orb-cherry {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, var(--color-soft-rose), transparent);
-    bottom: -15%;
+    width: 750px;
+    height: 750px;
+    background: radial-gradient(circle, var(--color-cherry-pink) 0%, transparent 70%);
+    bottom: -20%;
     right: -10%;
-    animation-delay: -7s;
+    animation-delay: -8s;
 }
 
 .orb-white {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, var(--color-pure-white), transparent);
-    top: 40%;
-    left: 35%;
-    animation-delay: -12s;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    top: 35%;
+    left: 30%;
+    animation-delay: -14s;
 }
 
-/* App Layer Stack */
+/* Root App Surface Layer */
 #app {
     position: relative;
     z-index: 2;
@@ -120,7 +149,7 @@ html, body {
 }
 
 /* ==========================================================================
-   3. HERO LOCKSCREEN & ENTRY INTRO
+   4. HERO SCREEN & INTRO EXPERIENCES
    ========================================================================== */
 .hero-screen {
     min-height: 100vh;
@@ -130,37 +159,55 @@ html, body {
     align-items: center;
     padding: 2rem 1.5rem;
     position: relative;
+    perspective: 1200px;
 }
 
 .glass-hero-card {
+    position: relative;
     background: var(--glass-bg-primary);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
     border: 1px solid var(--glass-border-light);
-    border-radius: 36px;
-    padding: 3.5rem 3rem;
-    max-width: 680px;
+    border-radius: 40px;
+    padding: 4rem 3.5rem;
+    max-width: 720px;
     width: 100%;
     text-align: center;
     box-shadow: var(--shadow-retina-lg);
-    animation: scaleInHero 1.2s var(--transition-apple-smooth) forwards;
     transform-style: preserve-3d;
+    animation: heroEntrance 1.4s var(--ease-apple-smooth) forwards;
+    overflow: hidden;
+}
+
+/* Holographic Edge Highlight */
+.glass-hero-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 40px;
+    padding: 1.5px;
+    background: var(--glass-specular-top);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
 }
 
 .hero-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 16px;
-    border-radius: 30px;
-    background: rgba(233, 30, 99, 0.08);
-    border: 1px solid rgba(233, 30, 99, 0.2);
+    gap: 10px;
+    padding: 8px 20px;
+    border-radius: 40px;
+    background: rgba(233, 30, 99, 0.15);
+    border: 1px solid rgba(244, 143, 177, 0.3);
     font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--color-cherry-pink);
-    letter-spacing: 0.5px;
-    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: var(--color-soft-rose);
+    letter-spacing: 1.5px;
+    margin-bottom: 1.8rem;
     text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(233, 30, 99, 0.2);
 }
 
 .pulsing-dot {
@@ -168,160 +215,169 @@ html, body {
     height: 8px;
     background-color: var(--color-cherry-pink);
     border-radius: 50%;
-    box-shadow: 0 0 10px var(--color-cherry-pink);
-    animation: pulseDot 2s infinite ease-in-out;
+    box-shadow: 0 0 12px var(--color-cherry-pink);
+    animation: pulseGlowDot 1.8s infinite ease-in-out;
 }
 
 .hero-pretitle {
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 2px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--color-deep-cherry);
-    margin-bottom: 0.2rem;
+    color: var(--color-dull-pink);
+    margin-bottom: 0.4rem;
 }
 
 .hero-title {
     font-family: var(--font-heading);
-    font-size: 4.2rem;
+    font-size: 4.8rem;
     font-weight: 700;
-    letter-spacing: 2px;
-    background: linear-gradient(135deg, var(--color-dark-cherry) 0%, var(--color-cherry-pink) 60%, var(--color-soft-rose) 100%);
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8BBD0 40%, #E91E63 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
+    line-height: 1.05;
+    margin-bottom: 0.8rem;
+    filter: drop-shadow(0 4px 12px rgba(233, 30, 99, 0.3));
 }
 
 .hero-subtitle {
     font-family: var(--font-serif);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-style: italic;
-    color: var(--color-deep-cherry);
-    margin-bottom: 2rem;
+    color: var(--color-soft-rose);
+    margin-bottom: 2.2rem;
 }
 
-/* iOS Dynamic Widgets */
+/* iOS Dynamic Status Widgets */
 .hero-widgets {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.08);
     border: 1px solid var(--glass-border-light);
-    border-radius: 20px;
-    padding: 1rem;
-    margin: 0 auto 2rem auto;
-    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 1.2rem;
+    margin: 0 auto 2.2rem auto;
+    backdrop-filter: blur(15px);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .widget-box {
     display: flex;
     flex-direction: column;
-    padding: 0 1.5rem;
+    padding: 0 1.8rem;
 }
 
 .widget-val {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-cherry-pink);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-pure-white);
+    text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
 }
 
 .widget-lbl {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--color-dark-cherry);
-    opacity: 0.7;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-dull-pink);
+    opacity: 0.8;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .widget-divider {
     width: 1px;
-    height: 28px;
-    background: rgba(233, 30, 99, 0.2);
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .hero-description {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--color-dark-cherry);
-    opacity: 0.85;
-    margin-bottom: 2.5rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-pale-pink);
+    opacity: 0.9;
+    margin-bottom: 2.8rem;
 }
 
-/* iOS Glass Buttons */
+/* VisionOS Glass Action Buttons */
 .ios-glass-btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 16px 36px;
+    gap: 12px;
+    padding: 18px 42px;
     border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 700;
     cursor: pointer;
     border: none;
-    transition: all 0.35s var(--transition-apple-smooth);
+    transition: all 0.4s var(--ease-spring-1);
     outline: none;
+    overflow: hidden;
 }
 
 .ios-glass-btn.primary {
     background: linear-gradient(135deg, var(--color-cherry-pink), var(--color-deep-cherry));
     color: var(--color-pure-white);
-    box-shadow: 0 10px 25px rgba(233, 30, 99, 0.35);
+    box-shadow: 0 10px 30px rgba(233, 30, 99, 0.5);
+}
+
+.ios-glass-btn.primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg) translateY(-100%);
+    transition: transform 0.8s ease;
+}
+
+.ios-glass-btn.primary:hover::after {
+    transform: rotate(45deg) translateY(100%);
 }
 
 .ios-glass-btn.primary:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 15px 35px rgba(233, 30, 99, 0.5);
-}
-
-.ios-glass-btn.secondary {
-    background: var(--glass-bg-hover);
-    color: var(--color-deep-cherry);
-    border: 1px solid var(--glass-border-light);
-}
-
-.ios-glass-btn.secondary:hover {
-    background: var(--color-pure-white);
-    transform: translateY(-2px);
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 18px 45px rgba(233, 30, 99, 0.7);
 }
 
 .lockscreen-footer {
     position: absolute;
-    bottom: 25px;
+    bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    opacity: 0.8;
+    gap: 10px;
 }
 
 .swipe-bar {
-    width: 130px;
+    width: 140px;
     height: 5px;
-    background: var(--color-cherry-pink);
+    background: var(--color-soft-rose);
     border-radius: 10px;
-    opacity: 0.6;
-    animation: bounceBar 2s infinite;
+    box-shadow: 0 0 10px var(--color-soft-rose);
+    animation: floatSwipeBar 2s infinite ease-in-out;
 }
 
 .lockscreen-footer p {
-    font-size: 0.8rem;
-    letter-spacing: 1px;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--color-deep-cherry);
+    color: var(--color-dull-pink);
 }
 
 /* ==========================================================================
-   4. DASHBOARD & GLASS NAVBAR
+   5. DASHBOARD & VISIONOS NAVIGATION BAR
    ========================================================================== */
 .dashboard-container {
-    max-width: 1280px;
+    max-width: 1340px;
     margin: 0 auto;
-    padding: 110px 2rem 80px 2rem;
+    padding: 120px 2rem 80px 2rem;
     opacity: 1;
-    transition: opacity 0.8s var(--transition-apple-smooth);
+    transition: opacity 0.8s var(--ease-apple-smooth);
 }
 
 .dashboard-container.hidden,
@@ -332,24 +388,24 @@ html, body {
     pointer-events: none !important;
 }
 
-/* VisionOS Glass Navbar */
+/* Floating VisionOS Glass Navbar */
 .glass-navbar {
     position: fixed;
-    top: 20px;
+    top: 24px;
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 4rem);
-    max-width: 1200px;
-    height: 65px;
+    max-width: 1260px;
+    height: 70px;
     background: var(--glass-bg-primary);
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
     border: 1px solid var(--glass-border-light);
     border-radius: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.8rem;
+    padding: 0 2rem;
     z-index: 100;
     box-shadow: var(--shadow-retina-md);
 }
@@ -357,84 +413,96 @@ html, body {
 .nav-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .nav-logo-icon {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+    filter: drop-shadow(0 0 8px var(--color-cherry-pink));
 }
 
 .nav-title {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--color-dark-cherry);
+    font-size: 1.15rem;
+    color: var(--color-pure-white);
+    letter-spacing: 1px;
 }
 
 .status-chip {
-    background: rgba(233, 30, 99, 0.1);
-    color: var(--color-cherry-pink);
-    border: 1px solid rgba(233, 30, 99, 0.2);
-    padding: 6px 16px;
-    border-radius: 20px;
+    background: rgba(233, 30, 99, 0.2);
+    color: var(--color-soft-rose);
+    border: 1px solid rgba(244, 143, 177, 0.4);
+    padding: 6px 18px;
+    border-radius: 30px;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
+    box-shadow: inset 0 0 10px rgba(233, 30, 99, 0.2);
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .nav-icon-btn {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid var(--glass-border-light);
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-dark-cherry);
-    cursor: pointer;
-    transition: all 0.3s ease;
+    color: var(--color-pure-white);
+    transition: all 0.3s var(--ease-spring-1);
 }
 
 .nav-icon-btn:hover {
-    background: var(--color-pure-white);
-    transform: scale(1.08);
+    background: var(--color-cherry-pink);
+    transform: scale(1.12);
+    box-shadow: 0 0 20px var(--color-cherry-pink);
 }
 
-/* Dashboard Banner */
+/* Dashboard Banner Card */
 .dashboard-banner {
     text-align: center;
-    margin-bottom: 3.5rem;
+    margin-bottom: 4rem;
 }
 
 .banner-glass-content {
     background: var(--glass-bg-primary);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(25px);
     border: 1px solid var(--glass-border-light);
     display: inline-block;
-    padding: 2.5rem 3.5rem;
-    border-radius: 30px;
-    box-shadow: var(--shadow-retina-sm);
+    padding: 3rem 4rem;
+    border-radius: 36px;
+    box-shadow: var(--shadow-retina-md);
+    position: relative;
+    overflow: hidden;
 }
 
 .banner-glass-content h2 {
     font-family: var(--font-serif);
-    font-size: 2.5rem;
-    color: var(--color-dark-cherry);
-    margin-bottom: 0.5rem;
+    font-size: 2.8rem;
+    color: var(--color-pure-white);
+    margin-bottom: 0.6rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .banner-glass-content p {
-    color: var(--color-deep-cherry);
-    font-size: 1.05rem;
+    color: var(--color-dull-pink);
+    font-size: 1.1rem;
 }
 
 /* ==========================================================================
-   5. 15 GIFT CARDS GRID & CARDS DESIGN
+   6. GIFTS GRID & VOLUMETRIC GLASS CARDS
    ========================================================================== */
 .gifts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2.5rem;
 }
 
 .gift-card-wrapper {
@@ -444,32 +512,54 @@ html, body {
 .glass-card {
     position: relative;
     background: var(--glass-bg-primary);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
     border: 1px solid var(--glass-border-light);
-    border-radius: 28px;
-    padding: 2rem 1.6rem;
+    border-radius: 32px;
+    padding: 2.2rem 1.8rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 270px;
+    min-height: 290px;
     box-shadow: var(--shadow-retina-sm);
-    cursor: pointer;
-    transition: all 0.4s var(--transition-apple-spring);
+    transition: transform 0.4s var(--ease-spring-1), background 0.4s ease, border 0.4s ease, box-shadow 0.4s ease;
     overflow: hidden;
 }
 
-.glass-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: var(--shadow-retina-lg);
-    background: var(--glass-bg-hover);
-    border-color: var(--glass-border-glow);
+.glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 32px;
+    padding: 1px;
+    background: var(--glass-specular-top);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
 }
 
-.highlight-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(248, 187, 208, 0.45));
-    border: 2px solid var(--color-cherry-pink);
-    box-shadow: var(--shadow-glow-cherry);
+.glass-card:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-glow);
+    box-shadow: var(--shadow-retina-lg), var(--shadow-glow-cherry);
+}
+
+/* Locked Card State Logic */
+.gift-card-wrapper.locked .glass-card {
+    opacity: 0.45;
+    filter: grayscale(80%);
+    pointer-events: none;
+}
+
+.gift-card-wrapper.locked .glass-card::after {
+    content: '🔒';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
 }
 
 .card-glow {
@@ -478,7 +568,7 @@ html, body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(233, 30, 99, 0.15), transparent 70%);
+    background: radial-gradient(circle, rgba(233, 30, 99, 0.25), transparent 60%);
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -495,75 +585,83 @@ html, body {
 }
 
 .gift-num {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--color-cherry-pink);
-    opacity: 0.8;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--color-soft-rose);
 }
 
 .gift-status-badge {
     font-size: 0.72rem;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 12px;
-    background: rgba(233, 30, 99, 0.08);
-    color: var(--color-deep-cherry);
-    letter-spacing: 0.5px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-dull-pink);
+    letter-spacing: 1px;
     text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.gift-status-badge.special {
+.gift-status-badge.opened {
     background: var(--color-cherry-pink);
     color: var(--color-pure-white);
+    box-shadow: 0 0 10px var(--color-cherry-pink);
 }
 
 .card-icon-wrapper {
     text-align: center;
-    margin: 1rem 0;
+    margin: 1.2rem 0;
 }
 
 .floating-icon {
-    font-size: 3.2rem;
+    font-size: 3.6rem;
     display: inline-block;
-    transition: transform 0.4s var(--transition-apple-spring);
+    transition: transform 0.4s var(--ease-spring-2);
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
 }
 
 .glass-card:hover .floating-icon {
-    transform: scale(1.25) rotate(8deg);
+    transform: scale(1.3) rotate(10deg);
 }
 
 .card-info h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-dark-cherry);
-    margin-bottom: 0.3rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-pure-white);
+    margin-bottom: 0.4rem;
 }
 
 .card-info p {
-    font-size: 0.88rem;
-    color: var(--color-deep-cherry);
-    opacity: 0.8;
+    font-size: 0.9rem;
+    color: var(--color-dull-pink);
+    opacity: 0.85;
     line-height: 1.4;
 }
 
 .card-action {
-    margin-top: 1.2rem;
+    margin-top: 1.4rem;
 }
 
-.view-btn {
-    font-size: 0.85rem;
+.gift-card-btn {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border-light);
+    color: var(--color-pure-white);
     font-weight: 700;
-    color: var(--color-cherry-pink);
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
 }
 
-.glass-card:hover .view-btn {
-    color: var(--color-dark-cherry);
+.glass-card:hover .gift-card-btn {
+    background: var(--color-cherry-pink);
+    border-color: var(--color-cherry-pink);
+    box-shadow: 0 0 15px var(--color-cherry-pink);
 }
 
 /* ==========================================================================
-   6. RETINA MODAL DIALOG POPUP
+   7. MODAL DIALOG POPUP (RETINA GLASS)
    ========================================================================== */
 .ios-modal-backdrop {
     position: fixed;
@@ -571,111 +669,110 @@ html, body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(74, 44, 53, 0.4);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(11, 2, 16, 0.7);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 1.5rem;
     opacity: 1;
-    transition: opacity 0.4s var(--transition-apple-smooth);
+    transition: opacity 0.4s var(--ease-apple-smooth);
 }
 
 .ios-modal-container {
     position: relative;
     width: 100%;
-    max-width: 520px;
+    max-width: 560px;
     background: var(--glass-bg-solid);
-    border: 1px solid var(--glass-border-light);
-    border-radius: 36px;
-    box-shadow: var(--shadow-retina-lg);
+    border: 1px solid var(--glass-border-glow);
+    border-radius: 40px;
+    box-shadow: var(--shadow-retina-lg), var(--shadow-glow-cherry);
     overflow: hidden;
-    animation: modalPopIn 0.45s var(--transition-apple-spring) forwards;
+    animation: modalPopInSpring 0.5s var(--ease-spring-2) forwards;
 }
 
 .modal-close-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 36px;
-    height: 36px;
+    top: 22px;
+    right: 22px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.05);
-    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border-light);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-dark-cherry);
-    cursor: pointer;
+    color: var(--color-pure-white);
     transition: all 0.3s ease;
     z-index: 10;
 }
 
 .modal-close-btn:hover {
-    background: rgba(233, 30, 99, 0.15);
-    color: var(--color-cherry-pink);
-    transform: rotate(90deg);
+    background: var(--color-cherry-pink);
+    transform: rotate(90deg) scale(1.1);
 }
 
 .modal-glass-content {
-    padding: 2.5rem 2rem 2rem 2rem;
+    padding: 3rem 2.5rem 2.5rem 2.5rem;
 }
 
 .modal-top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
 }
 
 .modal-pill {
     background: var(--color-cherry-pink);
     color: var(--color-pure-white);
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 4px 14px;
-    border-radius: 14px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 16px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    box-shadow: 0 0 12px var(--color-cherry-pink);
 }
 
 .modal-date-tag {
-    font-size: 0.8rem;
-    color: var(--color-deep-cherry);
-    opacity: 0.7;
-    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--color-dull-pink);
+    font-weight: 600;
 }
 
 .modal-header {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
 }
 
 .modal-hero-icon {
-    font-size: 3.8rem;
-    margin-bottom: 0.5rem;
-    animation: floatIcon 3s ease-in-out infinite alternate;
+    font-size: 4.5rem;
+    margin-bottom: 0.8rem;
+    animation: floatIconFloating 3s ease-in-out infinite alternate;
+    filter: drop-shadow(0 6px 16px rgba(233, 30, 99, 0.4));
 }
 
 .modal-title {
     font-family: var(--font-serif);
-    font-size: 2rem;
-    color: var(--color-dark-cherry);
+    font-size: 2.2rem;
+    color: var(--color-pure-white);
 }
 
 .modal-body-scroll {
-    max-height: 240px;
+    max-height: 260px;
     overflow-y: auto;
-    padding-right: 5px;
-    margin-bottom: 2rem;
+    padding-right: 10px;
+    margin-bottom: 2.2rem;
 }
 
 .modal-body-text {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--color-dark-cherry);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-pale-pink);
     text-align: center;
 }
 
@@ -684,52 +781,52 @@ html, body {
     justify-content: center;
 }
 
-/* Custom Scrollbar for Modal Body */
+/* Custom Scrollbar */
 .modal-body-scroll::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
 }
 .modal-body-scroll::-webkit-scrollbar-thumb {
-    background: var(--color-dull-pink);
+    background: var(--color-cherry-pink);
     border-radius: 10px;
 }
 
 /* ==========================================================================
-   7. KEYFRAME ANIMATIONS
+   8. KEYFRAME ANIMATIONS
    ========================================================================== */
-@keyframes floatOrb {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    100% { transform: translate(80px, 60px) rotate(360deg); }
+@keyframes floatVolumetricOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(100px, 80px) scale(1.15); }
 }
 
-@keyframes pulseDot {
+@keyframes pulseGlowDot {
     0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.5); opacity: 0.5; }
+    50% { transform: scale(1.6); opacity: 0.4; }
 }
 
-@keyframes scaleInHero {
-    0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+@keyframes heroEntrance {
+    0% { opacity: 0; transform: scale(0.85) translateY(40px) rotateX(10deg); }
+    100% { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); }
+}
+
+@keyframes modalPopInSpring {
+    0% { opacity: 0; transform: scale(0.75) translateY(50px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-@keyframes modalPopIn {
-    0% { opacity: 0; transform: scale(0.82) translateY(30px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
+@keyframes floatSwipeBar {
+    0%, 100% { transform: translateY(0); opacity: 0.8; }
+    50% { transform: translateY(-8px); opacity: 0.4; }
 }
 
-@keyframes bounceBar {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+@keyframes floatIconFloating {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-12px) rotate(6deg); }
 }
 
-@keyframes floatIcon {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-10px); }
-}
-
-/* Responsive Styles */
+/* Media Queries */
 @media (max-width: 768px) {
-    .hero-title { font-size: 3rem; }
-    .glass-hero-card { padding: 2.5rem 1.5rem; }
-    .glass-navbar { width: calc(100% - 2rem); padding: 0 1rem; }
-    .dashboard-banner .banner-glass-content { padding: 1.8rem 1.5rem; }
+    .hero-title { font-size: 3.2rem; }
+    .glass-hero-card { padding: 2.8rem 1.8rem; }
+    .glass-navbar { width: calc(100% - 2rem); padding: 0 1.2rem; }
+    .banner-glass-content { padding: 2rem 1.5rem; }
 }
