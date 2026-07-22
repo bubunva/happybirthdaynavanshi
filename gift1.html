@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #1 — A Special Birthday Letter 💌 | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Reuse Main Glassmorphism Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* Specific Styles for Letter Page */
+        .gift-page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 60px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .letter-card {
+            background: var(--glass-bg-primary);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid var(--glass-border-light);
+            border-radius: 36px;
+            padding: 3.5rem 3rem;
+            max-width: 720px;
+            width: 100%;
+            box-shadow: var(--shadow-retina-lg);
+            position: relative;
+            overflow: hidden;
+            animation: modalPopIn 0.8s var(--transition-apple-spring) forwards;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(233, 30, 99, 0.15);
+            padding-bottom: 1.5rem;
+        }
+
+        .letter-icon {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            animation: floatIcon 3s ease-in-out infinite alternate;
+        }
+
+        .letter-title {
+            font-family: var(--font-serif);
+            font-size: 2.4rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.5rem;
+        }
+
+        .letter-subtitle {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-cherry-pink);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .letter-body {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #4a2c35;
+            white-space: pre-line;
+            min-height: 200px;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--color-cherry-pink);
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blinkCursor 0.8s infinite;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        .letter-footer {
+            margin-top: 2.5rem;
+            text-align: right;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--color-deep-cherry);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .letter-footer.visible {
+            opacity: 1;
+        }
+
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @media (max-width: 600px) {
+            .letter-card { padding: 2rem 1.5rem; }
+            .letter-title { font-size: 1.8rem; }
+            .letter-body { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Background -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Glowing Orbs -->
+    <div class="ambient-glows" aria-hidden="true">
+        <div class="orb orb-pale"></div>
+        <div class="orb orb-cherry"></div>
+        <div class="orb orb-white"></div>
+    </div>
+
+    <!-- Back Button to Dashboard -->
+    <div class="back-nav">
+        <a href="index.html" class="ios-glass-btn secondary" style="padding: 10px 20px; font-size: 0.9rem;">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Main Letter Experience -->
+    <div class="gift-page-container">
+        <div class="letter-card">
+            <div class="letter-header">
+                <div class="letter-icon">💌</div>
+                <span class="letter-subtitle">Gift #1 • Chapter Fifteen</span>
+                <h1 class="letter-title">Dearest Navanshi,</h1>
+            </div>
+
+            <!-- Letter Body with Typewriter Effect -->
+            <div class="letter-body" id="typewriter-text"></div>
+
+            <div class="letter-footer" id="letter-footer">
+                With all my heart,<br>
+                Happy 15th Birthday 💕
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Canvas & Interactive Particles Script -->
+    <script src="script.js"></script>
+
+    <script>
+        // Letter Content for Navanshi
+        const letterMessage = `Happy 15th Birthday, Navanshi! 🌸\n\nTurning 15 is such a special milestone, and I wanted to make sure today feels just as amazing as you are.\n\nEvery moment shared with you is filled with laughter, smiles, and unforgettable memories. You bring so much light and joy into the room, and watching you grow into such a kind, talented, and extraordinary person is truly wonderful.\n\nThis website is a collection of 15 special surprises created just for you. Take your time, explore each gift at your own pace, and I hope every single page puts a big smile on your face.\n\nHere’s to celebrating 15 amazing years of you, and to making many more incredible memories ahead!`;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const textContainer = document.getElementById("typewriter-text");
+            const footer = document.getElementById("letter-footer");
+            
+            let index = 0;
+            const speed = 35; // Typing speed in milliseconds
+
+            // Append glowing cursor
+            const cursor = document.createElement("span");
+            cursor.className = "typing-cursor";
+
+            function typeWriter() {
+                if (index < letterMessage.length) {
+                    const char = letterMessage.charAt(index);
+                    if (char === '\n') {
+                        textContainer.appendChild(document.createElement("br"));
+                    } else {
+                        textContainer.appendChild(document.createTextNode(char));
+                    }
+                    index++;
+                    textContainer.appendChild(cursor);
+                    setTimeout(typeWriter, speed);
+                } else {
+                    // Typing finished: show footer and explode subtle confetti
+                    cursor.remove();
+                    footer.classList.add("visible");
+                    if (typeof triggerConfettiBurst === "function") {
+                        triggerConfettiBurst();
+                    }
+                }
+            }
+
+            // Start typing after card animation completes
+            setTimeout(typeWriter, 600);
+        });
+    </script>
+</body>
+</html>
