@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #12 — Polaroid Memory Booth 📸 | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Reuse Main Glassmorphism Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .gift-page-container {
+            min-height: 100vh;
+            padding: 100px 20px 80px 20px;
+            max-width: 950px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: rgba(233, 30, 99, 0.15);
+            color: var(--color-cherry-pink);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .page-title {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: var(--color-deep-cherry);
+            opacity: 0.85;
+        }
+
+        /* Polaroid Wall Grid */
+        .polaroid-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            margin-bottom: 3rem;
+        }
+
+        /* 3D Flip Polaroid Card */
+        .polaroid-card {
+            background-color: transparent;
+            height: 340px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .polaroid-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s var(--transition-apple-spring);
+            transform-style: preserve-3d;
+        }
+
+        .polaroid-card.flipped .polaroid-inner {
+            transform: rotateY(180deg);
+        }
+
+        .polaroid-front, .polaroid-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 15px 15px 25px 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12), 0 5px 15px rgba(233, 30, 99, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Front Polaroid Styling */
+        .polaroid-front {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .polaroid-card:nth-child(even) .polaroid-front {
+            transform: rotate(2deg);
+        }
+
+        .polaroid-card:hover .polaroid-front {
+            transform: scale(1.03) rotate(0deg);
+            box-shadow: 0 20px 40px rgba(233, 30, 99, 0.2);
+        }
+
+        .polaroid-photo-frame {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--color-soft-rose), #ffebee);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            overflow: hidden;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .polaroid-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .polaroid-caption {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            color: var(--color-dark-cherry);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .polaroid-hint {
+            font-size: 0.75rem;
+            color: var(--color-cherry-pink);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* Back Polaroid Styling */
+        .polaroid-back {
+            background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+            border: 2px dashed var(--color-cherry-pink);
+            transform: rotateY(180deg);
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .back-title {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.8rem;
+        }
+
+        .back-note {
+            font-size: 0.92rem;
+            color: var(--color-deep-cherry);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* Add Memory Card */
+        .add-memory-card {
+            background: var(--glass-bg-primary);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid var(--glass-border-light);
+            border-radius: 32px;
+            padding: 2.2rem 2rem;
+            box-shadow: var(--shadow-retina-lg);
+            width: 100%;
+            text-align: center;
+        }
+
+        .add-memory-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border-light);
+            background: rgba(255, 255, 255, 0.7);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--color-dark-cherry);
+            margin: 0.5rem 0 1rem 0;
+            outline: none;
+        }
+
+        .input-box:focus {
+            border-color: var(--color-cherry-pink);
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 2.1rem; }
+            .polaroid-card { height: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Background -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Glowing Orbs -->
+    <div class="ambient-glows" aria-hidden="true">
+        <div class="orb orb-pale"></div>
+        <div class="orb orb-cherry"></div>
+        <div class="orb orb-white"></div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-nav">
+        <a href="index.html" class="ios-glass-btn secondary" style="padding: 10px 20px; font-size: 0.9rem;">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="gift-page-container">
+        <header class="page-header">
+            <span class="page-badge">Gift #12 • Secret Chapter</span>
+            <h1 class="page-title">Polaroid Memory Booth 📸</h1>
+            <p class="page-subtitle">Tap any polaroid picture to flip it over and read secret behind-the-scenes notes!</p>
+        </header>
+
+        <!-- Polaroid Snapshots Grid -->
+        <div class="polaroid-grid" id="polaroidGrid">
+            <!-- Snap 1 -->
+            <div class="polaroid-card" onclick="flipPolaroid(this)">
+                <div class="polaroid-inner">
+                    <div class="polaroid-front">
+                        <div class="polaroid-photo-frame">🎂</div>
+                        <div class="polaroid-caption">15th Cake Moment</div>
+                        <div class="polaroid-hint">Tap to see note ✦</div>
+                    </div>
+                    <div class="polaroid-back">
+                        <div class="back-title">The Sweetest Wish ✨</div>
+                        <div class="back-note">Here’s to blowing out 15 candles and making the biggest, brightest birthday wishes for the year ahead!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Snap 2 -->
+            <div class="polaroid-card" onclick="flipPolaroid(this)">
+                <div class="polaroid-inner">
+                    <div class="polaroid-front">
+                        <div class="polaroid-photo-frame">👑</div>
+                        <div class="polaroid-caption">Queen Energy</div>
+                        <div class="polaroid-hint">Tap to see note ✦</div>
+                    </div>
+                    <div class="polaroid-back">
+                        <div class="back-title">Iconic Vibes Only 💖</div>
+                        <div class="back-note">Stepping into 15 with absolute confidence, elegance, and unmatched main character energy.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Snap 3 -->
+            <div class="polaroid-card" onclick="flipPolaroid(this)">
+                <div class="polaroid-inner">
+                    <div class="polaroid-front">
+                        <div class="polaroid-photo-frame">🌸</div>
+                        <div class="polaroid-caption">Laughter & Joy</div>
+                        <div class="polaroid-hint">Tap to see note ✦</div>
+                    </div>
+                    <div class="polaroid-back">
+                        <div class="back-title">Endless Smiles 😄</div>
+                        <div class="back-note">May your 15th year be filled with unforgettable memories, good music, and endless laughter with loved ones!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Your Own Snapshot -->
+        <div class="add-memory-card">
+            <h3>Add a New Virtual Snapshot ✍️</h3>
+            <p style="font-size: 0.92rem; color: var(--color-deep-cherry); opacity: 0.85;">
+                Add a custom caption to hang your own virtual memory on Navanshi's polaroid wall!
+            </p>
+
+            <input type="text" id="memoryCaption" class="input-box" placeholder="Memory Title (e.g. Best Birthday Ever!)">
+            <input type="text" id="memoryNote" class="input-box" placeholder="Secret note on the back...">
+            <br>
+            <button class="ios-glass-btn primary" onclick="addCustomPolaroid()" style="padding: 12px 30px;">
+                Pin to Wall 📌
+            </button>
+        </div>
+    </div>
+
+    <!-- Script connection -->
+    <script src="script.js"></script>
+
+    <script>
+        function flipPolaroid(card) {
+            card.classList.toggle("flipped");
+            if (card.classList.contains("flipped") && typeof triggerConfettiBurst === "function") {
+                triggerConfettiBurst();
+            }
+        }
+
+        function addCustomPolaroid() {
+            const caption = document.getElementById("memoryCaption").value.trim();
+            const note = document.getElementById("memoryNote").value.trim();
+            const grid = document.getElementById("polaroidGrid");
+
+            if (!caption || !note) {
+                alert("Please fill in both the title and the secret note!");
+                return;
+            }
+
+            const newCard = document.createElement("div");
+            newCard.className = "polaroid-card";
+            newCard.onclick = function() { flipPolaroid(this); };
+
+            const emojis = ['✨', '🎉', '🍧', '🍿', '🎁', '💖'];
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+
+            newCard.innerHTML = `
+                <div class="polaroid-inner">
+                    <div class="polaroid-front">
+                        <div class="polaroid-photo-frame">${randomEmoji}</div>
+                        <div class="polaroid-caption">${caption}</div>
+                        <div class="polaroid-hint">Tap to see note ✦</div>
+                    </div>
+                    <div class="polaroid-back">
+                        <div class="back-title">${caption}</div>
+                        <div class="back-note">${note}</div>
+                    </div>
+                </div>
+            `;
+
+            grid.appendChild(newCard);
+
+            document.getElementById("memoryCaption").value = "";
+            document.getElementById("memoryNote").value = "";
+
+            if (typeof triggerConfettiBurst === "function") {
+                triggerConfettiBurst();
+            }
+        }
+    </script>
+</body>
+</html>
