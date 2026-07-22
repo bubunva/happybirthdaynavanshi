@@ -1,1 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #6 — Future Wishes & Bucket List | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f051d;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Star & Wave Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .gift-container {
+            min-height: 100vh;
+            padding: 100px 20px 80px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            border-color: rgba(255, 182, 193, 0.6);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(233, 30, 99, 0.3));
+            color: #ffb6c1;
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #ffffff, #ffb6c1, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: #fce4ec;
+            opacity: 0.85;
+        }
+
+        /* Wish Jar Card */
+        .jar-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
+            border: 1px solid rgba(255, 192, 203, 0.3);
+            border-radius: 32px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .wish-jar {
+            font-size: 5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.6));
+            user-select: none;
+            margin-bottom: 1rem;
+        }
+
+        .wish-jar:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .jar-message-display {
+            min-height: 70px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 182, 193, 0.4);
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            font-style: italic;
+            color: #ffb6c1;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            width: 100%;
+            max-width: 650px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Bucket List Grid */
+        .section-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin: 1.5rem 0 1rem 0;
+            width: 100%;
+            text-align: left;
+        }
+
+        .bucket-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            margin-bottom: 2.5rem;
+        }
+
+        .bucket-item {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 192, 203, 0.2);
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bucket-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #ff69b4;
+            transform: translateX(5px);
+        }
+
+        .bucket-checkbox {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            border: 2px solid #ff69b4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #fff;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .bucket-item.checked .bucket-checkbox {
+            background: linear-gradient(135deg, #ff69b4, #e91e63);
+            border-color: transparent;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .bucket-text {
+            font-size: 1.05rem;
+            color: #fce4ec;
+            transition: all 0.3s ease;
+        }
+
+        .bucket-item.checked .bucket-text {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        /* Wish Lock Section */
+        .wish-box-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(35px);
+            border: 1px solid rgba(255, 192, 203, 0.3);
+            border-radius: 28px;
+            padding: 2rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        .wish-input {
+            width: 100%;
+            height: 100px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            border-radius: 18px;
+            padding: 1rem;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            resize: none;
+            margin: 1rem 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .wish-input:focus {
+            border-color: #ff69b4;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #ff69b4, #e91e63);
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.7);
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 2.1rem; }
+            .wish-jar { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Starfield & Waves Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <div class="back-nav">
+        <a href="index.html" class="glass-btn">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="gift-container">
+        <header class="page-header">
+            <span class="page-badge">Gift #6 • Chapter 15 Dreams</span>
+            <h1 class="page-title">Wishes & Bucket List 🌟</h1>
+            <p class="page-subtitle">Tap the Wish Jar to draw a blessing & check off Chapter 15 goals!</p>
+        </header>
+
+        <!-- Wish Jar Section -->
+        <div class="jar-card">
+            <div class="wish-jar" id="wishJar" onclick="drawWish()">🫙</div>
+            <p style="font-size:0.9rem; color:#ffb6c1; margin-bottom:1rem;">(Tap the glass jar to pull out a secret wish!)</p>
+            <div class="jar-message-display" id="jarMessage">
+                ✨ Click the Wish Jar above to see what Chapter 15 holds for you!
+            </div>
+        </div>
+
+        <!-- Bucket List Section -->
+        <h2 class="section-heading">📋 Chapter 15 Memory Bucket List</h2>
+        <div class="bucket-list">
+            <div class="bucket-item" onclick="toggleBucket(this)">
+                <div class="bucket-checkbox">✓</div>
+                <div class="bucket-text">📸 Take an iconic aesthetic photoshoot for 15th Birthday</div>
+            </div>
+            <div class="bucket-item" onclick="toggleBucket(this)">
+                <div class="bucket-checkbox">✓</div>
+                <div class="bucket-text">🍕 Midnight snack party & late-night core memory talks</div>
+            </div>
+            <div class="bucket-item" onclick="toggleBucket(this)">
+                <div class="bucket-checkbox">✓</div>
+                <div class="bucket-text">🎶 Go to a live concert / music festival together</div>
+            </div>
+            <div class="bucket-item" onclick="toggleBucket(this)">
+                <div class="bucket-checkbox">✓</div>
+                <div class="bucket-text">🛍️ Full day dream shopping spree & cafe hopping</div>
+            </div>
+            <div class="bucket-item" onclick="toggleBucket(this)">
+                <div class="bucket-checkbox">✓</div>
+                <div class="bucket-text">🏖️ Sunset beach/road trip adventure</div>
+            </div>
+        </div>
+
+        <!-- Secret Wish Lock Box -->
+        <div class="wish-box-card">
+            <h2 style="font-family:'Playfair Display', serif; color:#ffb6c1; margin-bottom:0.5rem;">🔒 Lock Your Secret Chapter 15 Wish</h2>
+            <p style="font-size:0.95rem; color:#fce4ec; opacity:0.85;">Type your biggest personal goal or wish for age 15 and seal it into the universe!</p>
+            
+            <textarea class="wish-input" id="secretWishInput" placeholder="Type your secret wish here..."></textarea>
+            
+            <button class="action-btn" onclick="sealWish()">Seal Wish in Vault 🔐</button>
+            <p id="sealConfirmation" style="color:#81c784; font-weight:600; margin-top:0.8rem; display:none;">✨ Wish officially sealed into Chapter 15! May it all come true!</p>
+        </div>
+
+    </div>
+
+    <script>
+        /* --- STARS & WAVE CANVAS ANIMATION --- */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height, stars = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((width * height) / 3000);
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005,
+                    twinkleDir: Math.random() > 0.5 ? 1 : -1
+                });
+            }
+        }
+
+        function drawBackground() {
+            const grad = ctx.createLinearGradient(0, 0, 0, height);
+            grad.addColorStop(0, '#0f051d');
+            grad.addColorStop(0.5, '#1a0933');
+            grad.addColorStop(1, '#090212');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed * star.twinkleDir;
+                if (star.alpha >= 1) { star.alpha = 1; star.twinkleDir = -1; }
+                if (star.alpha <= 0.2) { star.alpha = 0.2; star.twinkleDir = 1; }
+
+                ctx.save();
+                ctx.globalAlpha = star.alpha;
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#ffb6c1';
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            const time = Date.now() * 0.001;
+            drawWave(time, 0.002, 40, '#ff1493', 0.08);
+            drawWave(time + 2, 0.003, 30, '#8a2be2', 0.06);
+
+            requestAnimationFrame(drawBackground);
+        }
+
+        function drawWave(time, speed, amplitude, color, alpha) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(0, height * 0.7);
+            for (let x = 0; x <= width; x += 10) {
+                const y = Math.sin(x * speed + time) * amplitude + Math.cos(x * 0.001 + time) * (amplitude / 2) + (height * 0.7);
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.globalAlpha = alpha;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        drawBackground();
+
+        /* --- WISH JAR LOGIC --- */
+        const wishes = [
+            "💖 May Chapter 15 bring you unlimited laughter and core memories!",
+            "✨ May all your biggest dreams and goals come true this year!",
+            "👑 May you always shine brightly and stay your genuine, beautiful self!",
+            "🌸 May this year be filled with endless adventures, success, and pure happiness!",
+            "🌟 Chapter 15 is going to be your absolute best and most iconic year yet!"
+        ];
+
+        let wishIdx = 0;
+
+        function drawWish() {
+            const display = document.getElementById('jarMessage');
+            display.style.opacity = '0';
+            setTimeout(() => {
+                display.innerText = wishes[wishIdx];
+                display.style.opacity = '1';
+                wishIdx = (wishIdx + 1) % wishes.length;
+            }, 200);
+        }
+
+        /* --- BUCKET LIST TOGGLE --- */
+        function toggleBucket(el) {
+            el.classList.toggle('checked');
+        }
+
+        /* --- SEAL SECRET WISH --- */
+        function sealWish() {
+            const val = document.getElementById('secretWishInput').value.trim();
+            if (val === "") {
+                alert("Please type a wish before sealing!");
+                return;
+            }
+            document.getElementById('sealConfirmation').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
