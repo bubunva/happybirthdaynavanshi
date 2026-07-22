@@ -3,20 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Gift #15 — The Birthday Time Capsule 🍾 | Navanshi’s 15th</title>
+    <title>Gift #15 — Grand Finale Cake Cutting | Navanshi’s 15th</title>
     
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
     
-    <!-- Reuse Main Glassmorphism Stylesheet -->
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <link rel="stylesheet" href="styles.css">
 
     <style>
-        .gift-page-container {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d021a;
+            color: #fff;
             min-height: 100vh;
-            padding: 100px 20px 80px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Starfield Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .gift-container {
+            min-height: 100vh;
+            padding: 90px 20px 60px 20px;
             max-width: 850px;
             margin: 0 auto;
             position: relative;
@@ -26,123 +54,6 @@
             align-items: center;
         }
 
-        .page-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .page-badge {
-            display: inline-block;
-            background: rgba(233, 30, 99, 0.15);
-            color: var(--color-cherry-pink);
-            border: 1px solid rgba(233, 30, 99, 0.3);
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 0.8rem;
-        }
-
-        .page-title {
-            font-family: var(--font-serif);
-            font-size: 2.8rem;
-            color: var(--color-dark-cherry);
-            margin-bottom: 0.5rem;
-        }
-
-        .page-subtitle {
-            font-size: 1.05rem;
-            color: var(--color-deep-cherry);
-            opacity: 0.85;
-        }
-
-        /* Capsule Main Card */
-        .capsule-card {
-            background: var(--glass-bg-primary);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            border: 1px solid var(--glass-border-light);
-            border-radius: 32px;
-            padding: 2.5rem 2rem;
-            box-shadow: var(--shadow-retina-lg);
-            width: 100%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .capsule-icon {
-            font-size: 4.5rem;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 10px 20px rgba(233, 30, 99, 0.3));
-            animation: floatBottle 3s ease-in-out infinite;
-        }
-
-        @keyframes floatBottle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .textarea-box {
-            width: 100%;
-            max-width: 550px;
-            height: 130px;
-            padding: 15px 20px;
-            border-radius: 20px;
-            border: 1px solid var(--glass-border-light);
-            background: rgba(255, 255, 255, 0.75);
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            color: var(--color-dark-cherry);
-            margin: 1.2rem 0;
-            outline: none;
-            resize: none;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .textarea-box:focus {
-            border-color: var(--color-cherry-pink);
-            background: rgba(255, 255, 255, 0.95);
-        }
-
-        /* Saved Wishes List */
-        .wishes-container {
-            width: 100%;
-            max-width: 550px;
-            margin-top: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .wish-scroll-card {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px dashed var(--color-cherry-pink);
-            border-radius: 16px;
-            padding: 1rem 1.2rem;
-            font-family: var(--font-serif);
-            font-size: 1rem;
-            color: var(--color-dark-cherry);
-            text-align: left;
-            position: relative;
-            box-shadow: var(--shadow-retina-sm);
-        }
-
-        .wish-scroll-card::before {
-            content: "📜 Sealed Wish for 16:";
-            display: block;
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--color-cherry-pink);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
         .back-nav {
             position: fixed;
             top: 25px;
@@ -150,103 +61,504 @@
             z-index: 100;
         }
 
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            border-color: rgba(255, 182, 193, 0.6);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 105, 180, 0.3));
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            padding: 6px 22px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #ffffff, #ffd700, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Cake Card Stage */
+        .cake-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(35px) saturate(180%);
+            -webkit-backdrop-filter: blur(35px) saturate(180%);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            border-radius: 32px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Music Controls */
+        .music-bar {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .music-btn {
+            background: rgba(255, 105, 180, 0.2);
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .music-btn:hover {
+            background: rgba(255, 105, 180, 0.4);
+            border-color: #ff69b4;
+            transform: scale(1.05);
+        }
+
+        /* Cake Container CSS Art */
+        .cake-wrapper {
+            position: relative;
+            width: 280px;
+            height: 260px;
+            margin: 20px 0 30px 0;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .plate {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            height: 20px;
+            background: linear-gradient(135deg, #e0e0e0, #ffffff, #9e9e9e);
+            border-radius: 50%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .cake-layer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 15px;
+            box-shadow: inset 0 -8px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.6s ease;
+        }
+
+        .layer-bottom {
+            bottom: 15px;
+            width: 260px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff80ab, #f48fb1);
+        }
+
+        .layer-middle {
+            bottom: 90px;
+            width: 200px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff4081, #f50057);
+        }
+
+        .layer-top {
+            bottom: 155px;
+            width: 140px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff80ab, #ff4081);
+        }
+
+        /* Cake Cut Effect */
+        .cake-wrapper.cut .cake-layer-left {
+            transform: translateX(-60%) rotate(-3deg);
+        }
+        .cake-wrapper.cut .cake-layer-right {
+            transform: translateX(-40%) rotate(3deg);
+        }
+
+        /* Candles */
+        .candles-container {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 18px;
+            z-index: 10;
+        }
+
+        .candle {
+            width: 10px;
+            height: 32px;
+            background: repeating-linear-gradient(45deg, #ffd700, #ffd700 5px, #fff 5px, #fff 10px);
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 18px;
+            background: radial-gradient(circle, #fff 20%, #ffeb3b 50%, #ff5722 100%);
+            border-radius: 50% 50% 35% 35%;
+            box-shadow: 0 0 15px #ffeb3b, 0 0 25px #ff5722;
+            animation: flicker 0.6s infinite alternate;
+            transition: opacity 0.4s ease;
+        }
+
+        .flame.off {
+            opacity: 0;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+            100% { transform: translateX(-50%) scale(1.15) rotate(2deg); }
+        }
+
+        /* Action Buttons */
+        .action-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #ff4081, #e91e63);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(233, 30, 99, 0.6);
+        }
+
+        .action-btn.gold {
+            background: linear-gradient(135deg, #ffd700, #ffa000);
+            color: #000;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Grand Finale Modal Banner */
+        .finale-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(13, 2, 26, 0.92);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+
+        .finale-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .finale-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #ffffff, #ffd700, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        .finale-sub {
+            font-size: 1.4rem;
+            color: #fce4ec;
+            max-width: 600px;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes glowPulse {
+            from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            to { text-shadow: 0 0 30px rgba(255, 105, 180, 0.8); }
+        }
+
         @media (max-width: 600px) {
-            .page-title { font-size: 2.1rem; }
+            .page-title { font-size: 2rem; }
+            .finale-title { font-size: 2.3rem; }
+            .finale-sub { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Canvas Background -->
-    <canvas id="ambient-canvas"></canvas>
+    <!-- Starfield Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
 
-    <!-- Glowing Orbs -->
-    <div class="ambient-glows" aria-hidden="true">
-        <div class="orb orb-pale"></div>
-        <div class="orb orb-cherry"></div>
-        <div class="orb orb-white"></div>
-    </div>
-
-    <!-- Back Button -->
+    <!-- Navigation -->
     <div class="back-nav">
-        <a href="index.html" class="ios-glass-btn secondary" style="padding: 10px 20px; font-size: 0.9rem;">
+        <a href="index.html" class="glass-btn">
             ← Back to Dashboard
         </a>
     </div>
 
-    <div class="gift-page-container">
+    <div class="gift-container">
         <header class="page-header">
-            <span class="page-badge">Gift #15 • The Grand Finale</span>
-            <h1 class="page-title">The Birthday Time Capsule 🍾</h1>
-            <p class="page-subtitle">Write a secret message to yourself to be opened on your 16th Birthday!</p>
+            <span class="page-badge">Gift #15 • The Finale</span>
+            <h1 class="page-title">Make a Wish & Cut The Cake! 🎂</h1>
         </header>
 
-        <div class="capsule-card">
-            <div class="capsule-icon">🍾</div>
-
-            <textarea id="wishInput" class="textarea-box" placeholder="Write a wish, a goal, or a message for 16-year-old Navanshi..."></textarea>
-
-            <button class="ios-glass-btn primary" onclick="sealWish()" style="padding: 14px 36px; font-size: 1.05rem;">
-                🔒 Seal in Capsule & Celebrate!
-            </button>
-
-            <div class="wishes-container" id="wishesContainer">
-                <!-- Sealed Wishes will appear here -->
+        <div class="cake-card">
+            
+            <!-- Music Player Toggle -->
+            <div class="music-bar">
+                <button class="music-btn" id="musicBtn" onclick="toggleSong()">Play Birthday Song 🎵</button>
             </div>
+
+            <!-- Cake Art -->
+            <div class="cake-wrapper" id="cakeWrapper" onclick="cutCake()">
+                <div class="candles-container">
+                    <div class="candle"><div class="flame" id="flame1"></div></div>
+                    <div class="candle"><div class="flame" id="flame2"></div></div>
+                    <div class="candle"><div class="flame" id="flame3"></div></div>
+                </div>
+
+                <div class="cake-layer layer-top"></div>
+                <div class="cake-layer layer-middle"></div>
+                <div class="cake-layer layer-bottom"></div>
+                <div class="plate"></div>
+            </div>
+
+            <!-- Interactive Action Buttons -->
+            <div class="action-group">
+                <button class="action-btn" onclick="blowCandles()">Blow Out Candles 🌬️</button>
+                <button class="action-btn gold" onclick="cutCake()">Cut The Cake 🔪</button>
+            </div>
+
         </div>
     </div>
 
-    <!-- Script connection -->
-    <script src="script.js"></script>
+    <!-- Grand Finale Overlay -->
+    <div class="finale-overlay" id="finaleOverlay">
+        <h1 class="finale-title">HAPPY 15TH BIRTHDAY NAVANSHI! 🎉✨</h1>
+        <p class="finale-sub">
+            May your 15th year be filled with pure magic, endless laughter, and all the happiness in the universe. Thank you for being you! ❤️
+        </p>
+        <button class="glass-btn" onclick="closeFinale()">Replay Celebration 🔁</button>
+    </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            loadSavedWishes();
-        });
+        /* --- STARFIELD BACKGROUND --- */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, stars = [];
 
-        function sealWish() {
-            const input = document.getElementById("wishInput");
-            const text = input.value.trim();
-
-            if (!text) {
-                alert("Please write a wish before sealing the bottle!");
-                return;
-            }
-
-            // Save to localStorage
-            let saved = JSON.parse(localStorage.getItem("navanshi_capsule_wishes") || "[]");
-            saved.push(text);
-            localStorage.setItem("navanshi_capsule_wishes", JSON.stringify(saved));
-
-            input.value = "";
-            renderWishes();
-
-            if (typeof triggerConfettiBurst === "function") {
-                triggerConfettiBurst();
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            stars = [];
+            for (let i = 0; i < 150; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005
+                });
             }
         }
 
-        function loadSavedWishes() {
-            renderWishes();
-        }
+        function drawBg() {
+            ctx.fillStyle = '#0d021a';
+            ctx.fillRect(0, 0, width, height);
 
-        function renderWishes() {
-            const container = document.getElementById("wishesContainer");
-            const saved = JSON.parse(localStorage.getItem("navanshi_capsule_wishes") || "[]");
-
-            container.innerHTML = "";
-
-            if (saved.length === 0) {
-                container.innerHTML = `<p style="font-size: 0.9rem; color: var(--color-deep-cherry); opacity: 0.7;">No wishes sealed yet. Type your first message above!</p>`;
-                return;
-            }
-
-            saved.forEach(wish => {
-                const card = document.createElement("div");
-                card.className = "wish-scroll-card";
-                card.innerText = wish;
-                container.appendChild(card);
+            stars.forEach(s => {
+                s.alpha += s.speed;
+                if(s.alpha > 1) s.alpha = 0;
+                ctx.fillStyle = `rgba(255, 215, 0, ${Math.sin(s.alpha)})`;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                ctx.fill();
             });
+            requestAnimationFrame(drawBg);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        drawBg();
+
+        /* --- SYNTHESIZER BIRTHDAY SONG --- */
+        let audioCtx = null;
+        let isPlayingMusic = false;
+        let musicTimer = null;
+
+        const songNotes = [
+            { note: 'C4', duration: 0.4 }, { note: 'C4', duration: 0.4 }, { note: 'D4', duration: 0.8 }, { note: 'C4', duration: 0.8 }, { note: 'F4', duration: 0.8 }, { note: 'E4', duration: 1.2 },
+            { note: 'C4', duration: 0.4 }, { note: 'C4', duration: 0.4 }, { note: 'D4', duration: 0.8 }, { note: 'C4', duration: 0.8 }, { note: 'G4', duration: 0.8 }, { note: 'F4', duration: 1.2 },
+            { note: 'C4', duration: 0.4 }, { note: 'C4', duration: 0.4 }, { note: 'C5', duration: 0.8 }, { note: 'A4', duration: 0.8 }, { note: 'F4', duration: 0.8 }, { note: 'E4', duration: 0.8 }, { note: 'D4', duration: 1.2 },
+            { note: 'A#4', duration: 0.4 }, { note: 'A#4', duration: 0.4 }, { note: 'A4', duration: 0.8 }, { note: 'F4', duration: 0.8 }, { note: 'G4', duration: 0.8 }, { note: 'F4', duration: 1.4 }
+        ];
+
+        const frequencies = {
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 'G4': 392.00, 'A4': 440.00, 'A#4': 466.16, 'C5': 523.25
+        };
+
+        function playNote(freq, duration) {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function toggleSong() {
+            const btn = document.getElementById('musicBtn');
+            if (isPlayingMusic) {
+                isPlayingMusic = false;
+                btn.innerText = "Play Birthday Song 🎵";
+                clearTimeout(musicTimer);
+            } else {
+                isPlayingMusic = true;
+                btn.innerText = "Pause Music ⏸️";
+                playSequence(0);
+            }
+        }
+
+        function playSequence(index) {
+            if (!isPlayingMusic) return;
+            if (index >= songNotes.length) index = 0; // Loop song
+
+            const item = songNotes[index];
+            playNote(frequencies[item.note], item.duration);
+
+            musicTimer = setTimeout(() => {
+                playSequence(index + 1);
+            }, item.duration * 600);
+        }
+
+        /* --- CANDLES & CAKE INTERACTION --- */
+        let isBlown = false;
+        let isCut = false;
+
+        function blowCandles() {
+            document.querySelectorAll('.flame').forEach(f => f.classList.add('off'));
+            isBlown = true;
+            
+            confetti({
+                particleCount: 50,
+                spread: 50,
+                origin: { y: 0.6 },
+                colors: ['#ffffff', '#ffd700']
+            });
+        }
+
+        function cutCake() {
+            if (!isBlown) blowCandles();
+
+            if (!isPlayingMusic) toggleSong();
+
+            // Fire Celebration Fireworks
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff69b4', '#ffd700', '#ffffff']
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff69b4', '#ffd700', '#ffffff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+
+            // Show Finale Overlay
+            setTimeout(() => {
+                document.getElementById('finaleOverlay').classList.add('active');
+            }, 1200);
+        }
+
+        function closeFinale() {
+            document.getElementById('finaleOverlay').classList.remove('active');
         }
     </script>
 </body>
