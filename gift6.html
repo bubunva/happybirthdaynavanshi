@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Gift #6 — Future Wishes & Bucket List | Navanshi’s 15th</title>
+    <title>Gift #6 — 100 Memories Slideshow | Navanshi’s 15th</title>
     
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,8 +41,8 @@
 
         .gift-container {
             min-height: 100vh;
-            padding: 100px 20px 80px 20px;
-            max-width: 900px;
+            padding: 90px 20px 60px 20px;
+            max-width: 1000px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -86,7 +86,7 @@
 
         .page-header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .page-badge {
@@ -114,187 +114,182 @@
         }
 
         .page-subtitle {
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: #fce4ec;
             opacity: 0.85;
         }
 
-        /* Wish Jar Card */
-        .jar-card {
+        /* Slideshow Card Stage */
+        .slideshow-card {
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(35px) saturate(200%);
             -webkit-backdrop-filter: blur(35px) saturate(200%);
             border: 1px solid rgba(255, 192, 203, 0.3);
-            border-radius: 32px;
-            padding: 2.5rem 2rem;
+            border-radius: 28px;
+            padding: 1.5rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             width: 100%;
-            text-align: center;
-            margin-bottom: 2.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
+            margin-bottom: 2rem;
         }
 
-        .wish-jar {
-            font-size: 5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.6));
-            user-select: none;
-            margin-bottom: 1rem;
-        }
-
-        .wish-jar:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .jar-message-display {
-            min-height: 70px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px dashed rgba(255, 182, 193, 0.4);
-            border-radius: 20px;
-            padding: 1.2rem 1.5rem;
-            font-style: italic;
-            color: #ffb6c1;
-            font-size: 1.1rem;
-            line-height: 1.6;
+        /* Image Display Box */
+        .photo-stage {
+            position: relative;
             width: 100%;
-            max-width: 650px;
+            height: 480px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Bucket List Grid */
-        .section-heading {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+        .slide-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* Navigation Arrows */
+        .slide-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: #fff;
-            margin: 1.5rem 0 1rem 0;
-            width: 100%;
-            text-align: left;
-        }
-
-        .bucket-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            width: 100%;
-            margin-bottom: 2.5rem;
-        }
-
-        .bucket-item {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 192, 203, 0.2);
-            border-radius: 20px;
-            padding: 1.2rem 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .slide-arrow:hover {
+            background: rgba(255, 105, 180, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slide-arrow.prev { left: 15px; }
+        .slide-arrow.next { right: 15px; }
+
+        /* Controls Bar */
+        .controls-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 1.2rem;
+            padding: 0 10px;
+            flex-wrap: wrap;
             gap: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .bucket-item:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: #ff69b4;
-            transform: translateX(5px);
+        .photo-counter {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffb6c1;
+            letter-spacing: 1px;
         }
 
-        .bucket-checkbox {
-            width: 26px;
-            height: 26px;
-            border-radius: 8px;
-            border: 2px solid #ff69b4;
+        .play-controls {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            color: #fff;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
+            gap: 10px;
         }
 
-        .bucket-item.checked .bucket-checkbox {
-            background: linear-gradient(135deg, #ff69b4, #e91e63);
-            border-color: transparent;
-            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-        }
-
-        .bucket-text {
-            font-size: 1.05rem;
-            color: #fce4ec;
-            transition: all 0.3s ease;
-        }
-
-        .bucket-item.checked .bucket-text {
-            text-decoration: line-through;
-            opacity: 0.6;
-        }
-
-        /* Wish Lock Section */
-        .wish-box-card {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(35px);
-            border: 1px solid rgba(255, 192, 203, 0.3);
-            border-radius: 28px;
-            padding: 2rem;
-            width: 100%;
-            text-align: center;
-        }
-
-        .wish-input {
-            width: 100%;
-            height: 100px;
-            background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 182, 193, 0.4);
-            border-radius: 18px;
-            padding: 1rem;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            outline: none;
-            resize: none;
-            margin: 1rem 0;
-            transition: border-color 0.3s ease;
-        }
-
-        .wish-input:focus {
-            border-color: #ff69b4;
-            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
-        }
-
-        .action-btn {
+        .ctrl-btn {
             background: linear-gradient(135deg, #ff69b4, #e91e63);
             color: #fff;
             border: none;
-            padding: 12px 32px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
         }
 
-        .action-btn:hover {
+        .ctrl-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 105, 180, 0.7);
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
+        }
+
+        /* Thumbnails Strip */
+        .thumb-strip-container {
+            width: 100%;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .thumb-heading {
+            font-size: 1rem;
+            color: #ffb6c1;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .thumb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 10px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .thumb-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+        .thumb-grid::-webkit-scrollbar-thumb {
+            background: rgba(255, 105, 180, 0.5);
+            border-radius: 10px;
+        }
+
+        .thumb-item {
+            width: 100%;
+            height: 70px;
+            border-radius: 10px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .thumb-item:hover, .thumb-item.active {
+            opacity: 1;
+            border-color: #ff69b4;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.6);
         }
 
         @media (max-width: 600px) {
             .page-title { font-size: 2.1rem; }
-            .wish-jar { font-size: 4rem; }
+            .photo-stage { height: 320px; }
+            .slide-arrow { width: 40px; height: 40px; font-size: 1.2rem; }
+            .thumb-grid { grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); }
+            .thumb-item { height: 55px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Starfield & Waves Canvas Background -->
+    <!-- Starfield Background Canvas -->
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation -->
@@ -306,63 +301,39 @@
 
     <div class="gift-container">
         <header class="page-header">
-            <span class="page-badge">Gift #6 • Chapter 15 Dreams</span>
-            <h1 class="page-title">Wishes & Bucket List 🌟</h1>
-            <p class="page-subtitle">Tap the Wish Jar to draw a blessing & check off Chapter 15 goals!</p>
+            <span class="page-badge">Gift #6 • Photo Gallery</span>
+            <h1 class="page-title">100 Memories of Navanshi 📸</h1>
+            <p class="page-subtitle">A special slideshow showcasing 100 precious moments!</p>
         </header>
 
-        <!-- Wish Jar Section -->
-        <div class="jar-card">
-            <div class="wish-jar" id="wishJar" onclick="drawWish()">🫙</div>
-            <p style="font-size:0.9rem; color:#ffb6c1; margin-bottom:1rem;">(Tap the glass jar to pull out a secret wish!)</p>
-            <div class="jar-message-display" id="jarMessage">
-                ✨ Click the Wish Jar above to see what Chapter 15 holds for you!
+        <!-- Main Slideshow Card -->
+        <div class="slideshow-card">
+            <div class="photo-stage">
+                <button class="slide-arrow prev" onclick="changeSlide(-1)">❮</button>
+                <img id="mainImage" class="slide-img" src="photos/photo1.jpg" alt="Memory Photo" onerror="handleImageError(this)">
+                <button class="slide-arrow next" onclick="changeSlide(1)">❯</button>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-bar">
+                <div class="photo-counter" id="photoCounter">Photo 1 of 100</div>
+                <div class="play-controls">
+                    <button class="ctrl-btn" id="playPauseBtn" onclick="toggleAutoplay()">▶ Autoplay</button>
+                </div>
+            </div>
+
+            <!-- Thumbnail Grid -->
+            <div class="thumb-strip-container">
+                <div class="thumb-heading">Quick Jump Gallery (100 Photos):</div>
+                <div class="thumb-grid" id="thumbGrid"></div>
             </div>
         </div>
-
-        <!-- Bucket List Section -->
-        <h2 class="section-heading">📋 Chapter 15 Memory Bucket List</h2>
-        <div class="bucket-list">
-            <div class="bucket-item" onclick="toggleBucket(this)">
-                <div class="bucket-checkbox">✓</div>
-                <div class="bucket-text">📸 Take an iconic aesthetic photoshoot for 15th Birthday</div>
-            </div>
-            <div class="bucket-item" onclick="toggleBucket(this)">
-                <div class="bucket-checkbox">✓</div>
-                <div class="bucket-text">🍕 Midnight snack party & late-night core memory talks</div>
-            </div>
-            <div class="bucket-item" onclick="toggleBucket(this)">
-                <div class="bucket-checkbox">✓</div>
-                <div class="bucket-text">🎶 Go to a live concert / music festival together</div>
-            </div>
-            <div class="bucket-item" onclick="toggleBucket(this)">
-                <div class="bucket-checkbox">✓</div>
-                <div class="bucket-text">🛍️ Full day dream shopping spree & cafe hopping</div>
-            </div>
-            <div class="bucket-item" onclick="toggleBucket(this)">
-                <div class="bucket-checkbox">✓</div>
-                <div class="bucket-text">🏖️ Sunset beach/road trip adventure</div>
-            </div>
-        </div>
-
-        <!-- Secret Wish Lock Box -->
-        <div class="wish-box-card">
-            <h2 style="font-family:'Playfair Display', serif; color:#ffb6c1; margin-bottom:0.5rem;">🔒 Lock Your Secret Chapter 15 Wish</h2>
-            <p style="font-size:0.95rem; color:#fce4ec; opacity:0.85;">Type your biggest personal goal or wish for age 15 and seal it into the universe!</p>
-            
-            <textarea class="wish-input" id="secretWishInput" placeholder="Type your secret wish here..."></textarea>
-            
-            <button class="action-btn" onclick="sealWish()">Seal Wish in Vault 🔐</button>
-            <p id="sealConfirmation" style="color:#81c784; font-weight:600; margin-top:0.8rem; display:none;">✨ Wish officially sealed into Chapter 15! May it all come true!</p>
-        </div>
-
     </div>
 
     <script>
-        /* --- STARS & WAVE CANVAS ANIMATION --- */
+        /* --- BACKGROUND CANVAS ANIMATION --- */
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-
         let width, height, stars = [];
 
         function resize() {
@@ -410,69 +381,86 @@
                 ctx.restore();
             });
 
-            const time = Date.now() * 0.001;
-            drawWave(time, 0.002, 40, '#ff1493', 0.08);
-            drawWave(time + 2, 0.003, 30, '#8a2be2', 0.06);
-
             requestAnimationFrame(drawBackground);
-        }
-
-        function drawWave(time, speed, amplitude, color, alpha) {
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(0, height * 0.7);
-            for (let x = 0; x <= width; x += 10) {
-                const y = Math.sin(x * speed + time) * amplitude + Math.cos(x * 0.001 + time) * (amplitude / 2) + (height * 0.7);
-                ctx.lineTo(x, y);
-            }
-            ctx.lineTo(width, height);
-            ctx.lineTo(0, height);
-            ctx.closePath();
-            ctx.fillStyle = color;
-            ctx.globalAlpha = alpha;
-            ctx.fill();
-            ctx.restore();
         }
 
         window.addEventListener('resize', resize);
         resize();
         drawBackground();
 
-        /* --- WISH JAR LOGIC --- */
-        const wishes = [
-            "💖 May Chapter 15 bring you unlimited laughter and core memories!",
-            "✨ May all your biggest dreams and goals come true this year!",
-            "👑 May you always shine brightly and stay your genuine, beautiful self!",
-            "🌸 May this year be filled with endless adventures, success, and pure happiness!",
-            "🌟 Chapter 15 is going to be your absolute best and most iconic year yet!"
-        ];
+        /* --- 100 SLIDESHOW GALLERY LOGIC --- */
+        const TOTAL_PHOTOS = 100;
+        let currentIndex = 1;
+        let autoplayInterval = null;
 
-        let wishIdx = 0;
+        const mainImage = document.getElementById('mainImage');
+        const photoCounter = document.getElementById('photoCounter');
+        const thumbGrid = document.getElementById('thumbGrid');
+        const playPauseBtn = document.getElementById('playPauseBtn');
 
-        function drawWish() {
-            const display = document.getElementById('jarMessage');
-            display.style.opacity = '0';
+        // Render 100 Thumbnails
+        function buildThumbnails() {
+            for (let i = 1; i <= TOTAL_PHOTOS; i++) {
+                const img = document.createElement('img');
+                img.src = `photos/photo${i}.jpg`;
+                img.className = `thumb-item ${i === 1 ? 'active' : ''}`;
+                img.id = `thumb-${i}`;
+                img.onclick = () => goToSlide(i);
+                img.onerror = function() {
+                    this.src = `https://via.placeholder.com/150/ff69b4/ffffff?text=Photo+${i}`;
+                };
+                thumbGrid.appendChild(img);
+            }
+        }
+
+        function updateSlide() {
+            mainImage.style.opacity = '0';
             setTimeout(() => {
-                display.innerText = wishes[wishIdx];
-                display.style.opacity = '1';
-                wishIdx = (wishIdx + 1) % wishes.length;
+                mainImage.src = `photos/photo${currentIndex}.jpg`;
+                photoCounter.innerText = `Photo ${currentIndex} of ${TOTAL_PHOTOS}`;
+                
+                // Highlight active thumbnail
+                document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
+                const activeThumb = document.getElementById(`thumb-${currentIndex}`);
+                if (activeThumb) {
+                    activeThumb.classList.add('active');
+                    activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+
+                mainImage.style.opacity = '1';
             }, 200);
         }
 
-        /* --- BUCKET LIST TOGGLE --- */
-        function toggleBucket(el) {
-            el.classList.toggle('checked');
+        function changeSlide(direction) {
+            currentIndex += direction;
+            if (currentIndex > TOTAL_PHOTOS) currentIndex = 1;
+            if (currentIndex < 1) currentIndex = TOTAL_PHOTOS;
+            updateSlide();
         }
 
-        /* --- SEAL SECRET WISH --- */
-        function sealWish() {
-            const val = document.getElementById('secretWishInput').value.trim();
-            if (val === "") {
-                alert("Please type a wish before sealing!");
-                return;
-            }
-            document.getElementById('sealConfirmation').style.display = 'block';
+        function goToSlide(index) {
+            currentIndex = index;
+            updateSlide();
         }
+
+        function toggleAutoplay() {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+                playPauseBtn.innerText = '▶ Autoplay';
+            } else {
+                autoplayInterval = setInterval(() => {
+                    changeSlide(1);
+                }, 3000);
+                playPauseBtn.innerText = '⏸ Pause';
+            }
+        }
+
+        function handleImageError(img) {
+            img.src = `https://via.placeholder.com/800x500/1a0933/ffb6c1?text=Photo+${currentIndex}+Placeholder`;
+        }
+
+        buildThumbnails();
     </script>
 </body>
 </html>
