@@ -3,168 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Gift #14 — Birthday Constellation Fortune 🔮 | Navanshi’s 15th</title>
+    <title>Gift #14 — A Special Message | Navanshi’s 15th</title>
     
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&display=swap" rel="stylesheet">
     
-    <!-- Reuse Main Glassmorphism Stylesheet -->
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <link rel="stylesheet" href="styles.css">
 
     <style>
-        .gift-page-container {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f051d;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Starfield Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .gift-container {
             min-height: 100vh;
             padding: 100px 20px 80px 20px;
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .page-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .page-badge {
-            display: inline-block;
-            background: rgba(233, 30, 99, 0.15);
-            color: var(--color-cherry-pink);
-            border: 1px solid rgba(233, 30, 99, 0.3);
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 0.8rem;
-        }
-
-        .page-title {
-            font-family: var(--font-serif);
-            font-size: 2.8rem;
-            color: var(--color-dark-cherry);
-            margin-bottom: 0.5rem;
-        }
-
-        .page-subtitle {
-            font-size: 1.05rem;
-            color: var(--color-deep-cherry);
-            opacity: 0.85;
-        }
-
-        /* Crystal Orb Card */
-        .orb-card {
-            background: var(--glass-bg-primary);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            border: 1px solid var(--glass-border-light);
-            border-radius: 32px;
-            padding: 2.5rem 2rem;
-            box-shadow: var(--shadow-retina-lg);
-            width: 100%;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .crystal-ball {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #ffffff, #ffb3c1, #590d22);
-            box-shadow: 0 0 50px rgba(233, 30, 99, 0.5), inset -10px -10px 25px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4.5rem;
-            margin-bottom: 1.8rem;
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.4s var(--transition-apple-spring), box-shadow 0.4s ease;
-            position: relative;
-        }
-
-        .crystal-ball:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 70px rgba(233, 30, 99, 0.7), inset -10px -10px 25px rgba(0,0,0,0.3);
-        }
-
-        .crystal-ball.glowing {
-            animation: orbPulse 1.5s infinite alternate;
-        }
-
-        @keyframes orbPulse {
-            0% { box-shadow: 0 0 30px rgba(233, 30, 99, 0.4); }
-            100% { box-shadow: 0 0 80px rgba(233, 30, 99, 0.9); }
-        }
-
-        .fortune-display {
-            background: rgba(255, 255, 255, 0.65);
-            border: 1px solid var(--glass-border-light);
-            border-radius: 20px;
-            padding: 1.5rem 2rem;
-            min-height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            color: var(--color-dark-cherry);
-            width: 100%;
-            max-width: 550px;
-            transition: all 0.3s ease;
-        }
-
-        /* Constellation Cards Grid */
-        .stars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            width: 100%;
-        }
-
-        .star-card {
-            background: var(--glass-bg-primary);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border-light);
-            border-radius: 24px;
-            padding: 1.8rem 1.2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s var(--transition-apple-spring);
-        }
-
-        .star-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--color-cherry-pink);
-            box-shadow: var(--shadow-retina-md);
-        }
-
-        .star-icon {
-            font-size: 2.8rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .star-title {
-            font-family: var(--font-serif);
-            font-size: 1.3rem;
-            color: var(--color-dark-cherry);
-            margin-bottom: 0.5rem;
-        }
-
-        .star-desc {
-            font-size: 0.88rem;
-            color: var(--color-deep-cherry);
-            opacity: 0.85;
-            line-height: 1.4;
         }
 
         .back-nav {
@@ -174,114 +61,303 @@
             z-index: 100;
         }
 
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            border-color: rgba(255, 182, 193, 0.6);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(255, 215, 0, 0.3));
+            color: #ffb6c1;
+            border: 1px solid rgba(255, 182, 193, 0.5);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #ffffff, #ffd700, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: #fce4ec;
+            opacity: 0.85;
+        }
+
+        /* Letter Card Styling */
+        .letter-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(35px) saturate(180%);
+            -webkit-backdrop-filter: blur(35px) saturate(180%);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            border-radius: 32px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            width: 100%;
+            position: relative;
+            line-height: 1.85;
+        }
+
+        .letter-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .audio-toggle-btn {
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            color: #ffd700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audio-toggle-btn:hover {
+            background: rgba(255, 215, 0, 0.35);
+            border-color: #ffd700;
+        }
+
+        .letter-content {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: #fff;
+            font-style: italic;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            letter-spacing: 0.3px;
+        }
+
+        .letter-content p {
+            opacity: 0.95;
+        }
+
+        .letter-footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            text-align: right;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #ffd700;
+        }
+
+        .heart-sign {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.2s ease;
+            font-size: 1.5rem;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        .heart-sign:hover {
+            transform: scale(1.3);
+        }
+
         @media (max-width: 600px) {
             .page-title { font-size: 2.1rem; }
-            .crystal-ball { width: 130px; height: 130px; font-size: 3.5rem; }
+            .letter-card { padding: 2rem 1.5rem; }
+            .letter-content { font-size: 1.05rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Canvas Background -->
-    <canvas id="ambient-canvas"></canvas>
+    <!-- Starfield Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
 
-    <!-- Glowing Orbs -->
-    <div class="ambient-glows" aria-hidden="true">
-        <div class="orb orb-pale"></div>
-        <div class="orb orb-cherry"></div>
-        <div class="orb orb-white"></div>
-    </div>
-
-    <!-- Back Button -->
+    <!-- Navigation -->
     <div class="back-nav">
-        <a href="index.html" class="ios-glass-btn secondary" style="padding: 10px 20px; font-size: 0.9rem;">
+        <a href="index.html" class="glass-btn">
             ← Back to Dashboard
         </a>
     </div>
 
-    <div class="gift-page-container">
+    <div class="gift-container">
         <header class="page-header">
-            <span class="page-badge">Gift #14 • Cosmic Secret</span>
-            <h1 class="page-title">Constellation Fortune 🔮</h1>
-            <p class="page-subtitle">Tap the crystal orb to reveal what the stars have written for Navanshi's 15th year!</p>
+            <span class="page-badge">Gift #14 • Personal Letter</span>
+            <h1 class="page-title">Words From The Heart ✉️</h1>
+            <p class="page-subtitle">Another special message meant just for your eyes.</p>
         </header>
 
-        <!-- Crystal Ball Interactive Unit -->
-        <div class="orb-card">
-            <div class="crystal-ball" id="crystalBall" onclick="revealFortune()">
-                🔮
+        <div class="letter-card">
+            <div class="letter-header">
+                <span>My Dearest Navanshi,</span>
+                <button class="audio-toggle-btn" id="speechBtn" onclick="toggleSpeech()">Listen to Letter 🎧</button>
             </div>
 
-            <div class="fortune-display" id="fortuneDisplay">
-                Tap the crystal orb above to consult the cosmic stars... ✨
-            </div>
-        </div>
-
-        <!-- Cosmic Pillars Grid -->
-        <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-dark-cherry); margin-bottom: 1.2rem; width: 100%; text-align: center;">
-            ✦ Chapter 15 Cosmic Blessing Cards ✦
-        </h3>
-
-        <div class="stars-grid">
-            <div class="star-card" onclick="setSpecificFortune('✨ Star of Brilliance: Your creative ideas will shine brighter than ever this year!')">
-                <div class="star-icon">🌟</div>
-                <h4 class="star-title">Star of Brilliance</h4>
-                <p class="star-desc">Tap to align with your creative power & inspiration.</p>
+            <div class="letter-content" id="letterText">
+                <p>
+                    I couldn't complete this birthday portal without writing one more letter to tell you how truly special you are to me.
+                </p>
+                <p>
+                    Sometimes simple words aren't enough to capture how much your presence brightens up my days. Every smile, every conversation, and every little moment shared with you means the world.
+                </p>
+                <p>
+                    As you go through all 15 of these gifts, I hope you feel surrounded by all the care, appreciation, and joy you deserve on your 15th birthday.
+                </p>
+                <p>
+                    Never forget how bright you shine. Happy 15th Birthday again!
+                </p>
             </div>
 
-            <div class="star-card" onclick="setSpecificFortune('💖 Star of Connection: You will surround yourself with unmatched joy and true friends!')">
-                <div class="star-icon">🌙</div>
-                <h4 class="star-title">Star of Harmony</h4>
-                <p class="star-desc">Tap to unlock deep friendships & heartwarming memories.</p>
-            </div>
-
-            <div class="star-card" onclick="setSpecificFortune('🚀 Star of Success: High school goals and big dreams will fall effortlessly into place!')">
-                <div class="star-icon">🪐</div>
-                <h4 class="star-title">Star of Ambition</h4>
-                <p class="star-desc">Tap to channel unstoppable confidence and victory.</p>
+            <div class="letter-footer">
+                Yours Always,<br>
+                <span style="font-weight:700; color:#fff;">With All My Heart</span> 
+                <span class="heart-sign" onclick="heartBurst()">💖✨</span>
             </div>
         </div>
     </div>
 
-    <!-- Script connection -->
-    <script src="script.js"></script>
-
     <script>
-        const cosmicFortunes = [
-            "✨ The stars predict: 15 will be your most stylish and memorable year yet!",
-            "🔮 Cosmic Alignment: Great luck and unexpected sweet surprises are coming your way!",
-            "👑 Main Character Energy: You are destined to lead, inspire, and spread joy wherever you go!",
-            "🌸 Constellation Wish: Every dream you plant this year will bloom beyond expectations!",
-            "🎉 Galaxy Forecast: 100% chance of iconic laughs, great music, and continuous celebrations!"
-        ];
+        /* --- BACKGROUND CANVAS ANIMATION --- */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, stars = [];
 
-        function revealFortune() {
-            const ball = document.getElementById("crystalBall");
-            const display = document.getElementById("fortuneDisplay");
-
-            ball.classList.add("glowing");
-            display.innerText = "Consulting the stars... ✨";
-
-            setTimeout(() => {
-                ball.classList.remove("glowing");
-                const randomFortune = cosmicFortunes[Math.floor(Math.random() * cosmicFortunes.length)];
-                display.innerText = randomFortune;
-                display.style.color = "var(--color-cherry-pink)";
-
-                if (typeof triggerConfettiBurst === "function") {
-                    triggerConfettiBurst();
-                }
-            }, 800);
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initStars();
         }
 
-        function setSpecificFortune(text) {
-            const display = document.getElementById("fortuneDisplay");
-            display.innerText = text;
-            display.style.color = "var(--color-cherry-pink)";
-
-            if (typeof triggerConfettiBurst === "function") {
-                triggerConfettiBurst();
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((width * height) / 3000);
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005,
+                    twinkleDir: Math.random() > 0.5 ? 1 : -1
+                });
             }
+        }
+
+        function drawBackground() {
+            const grad = ctx.createLinearGradient(0, 0, 0, height);
+            grad.addColorStop(0, '#0f051d');
+            grad.addColorStop(0.5, '#1d0a2d');
+            grad.addColorStop(1, '#090212');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed * star.twinkleDir;
+                if (star.alpha >= 1) { star.alpha = 1; star.twinkleDir = -1; }
+                if (star.alpha <= 0.2) { star.alpha = 0.2; star.twinkleDir = 1; }
+
+                ctx.save();
+                ctx.globalAlpha = star.alpha;
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#ffd700';
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            requestAnimationFrame(drawBackground);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        drawBackground();
+
+        /* --- TEXT TO SPEECH LOGIC --- */
+        let isSpeaking = false;
+        let synth = window.speechSynthesis;
+
+        function toggleSpeech() {
+            const btn = document.getElementById('speechBtn');
+            if (!synth) {
+                alert("Text-to-speech is not supported on this browser.");
+                return;
+            }
+
+            if (isSpeaking) {
+                synth.cancel();
+                isSpeaking = false;
+                btn.innerText = "Listen to Letter 🎧";
+            } else {
+                const text = document.getElementById('letterText').innerText;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1.0;
+
+                utterance.onend = () => {
+                    isSpeaking = false;
+                    btn.innerText = "Listen to Letter 🎧";
+                };
+
+                synth.speak(utterance);
+                isSpeaking = true;
+                btn.innerText = "Stop Audio 🛑";
+            }
+        }
+
+        /* --- HEART BURST --- */
+        function heartBurst() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.8 },
+                colors: ['#ffd700', '#ff69b4', '#ffffff', '#e91e63']
+            });
         }
     </script>
 </body>
