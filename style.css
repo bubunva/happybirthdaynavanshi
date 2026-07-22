@@ -1,0 +1,735 @@
+/* ==========================================================================
+   1. DESIGN SYSTEM & APPLE PALETTE (PALES, DULL PINKS & CHERRY PINKS)
+   ========================================================================== */
+:root {
+    /* Color Palette */
+    --color-pale-pink: #FFF0F5;
+    --color-dull-pink: #F8BBD0;
+    --color-soft-rose: #F48FB1;
+    --color-cherry-pink: #E91E63;
+    --color-deep-cherry: #C2185B;
+    --color-dark-cherry: #880E4F;
+    --color-pure-white: #FFFFFF;
+
+    /* Glassmorphism System */
+    --glass-bg-primary: rgba(255, 255, 255, 0.35);
+    --glass-bg-hover: rgba(255, 255, 255, 0.55);
+    --glass-bg-solid: rgba(255, 240, 245, 0.85);
+    --glass-border-light: rgba(255, 255, 255, 0.65);
+    --glass-border-glow: rgba(233, 30, 99, 0.35);
+
+    /* Retina & Depth Shadows */
+    --shadow-retina-sm: 0 4px 16px -2px rgba(233, 30, 99, 0.12);
+    --shadow-retina-md: 0 12px 32px -4px rgba(233, 30, 99, 0.18), 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-retina-lg: 0 24px 60px -8px rgba(194, 24, 91, 0.28), 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-glow-cherry: 0 0 35px rgba(233, 30, 99, 0.45);
+
+    /* Typography */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-heading: 'Cinzel', serif;
+
+    /* Smooth Transitions */
+    --transition-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --transition-apple-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   2. GLOBAL RESETS & CANVAS SETUP
+   ========================================================================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: var(--font-sans);
+    background-color: var(--color-pale-pink);
+    color: var(--color-dark-cherry);
+}
+
+/* Particle Canvas Backdrop */
+#ambient-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Floating Ambient Orbs */
+.ambient-glows {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    filter: blur(80px);
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: floatOrb 22s infinite alternate ease-in-out;
+}
+
+.orb-pale {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--color-dull-pink), transparent);
+    top: -10%;
+    left: -10%;
+}
+
+.orb-cherry {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--color-soft-rose), transparent);
+    bottom: -15%;
+    right: -10%;
+    animation-delay: -7s;
+}
+
+.orb-white {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--color-pure-white), transparent);
+    top: 40%;
+    left: 35%;
+    animation-delay: -12s;
+}
+
+/* App Layer Stack */
+#app {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* ==========================================================================
+   3. HERO LOCKSCREEN & ENTRY INTRO
+   ========================================================================== */
+.hero-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+}
+
+.glass-hero-card {
+    background: var(--glass-bg-primary);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid var(--glass-border-light);
+    border-radius: 36px;
+    padding: 3.5rem 3rem;
+    max-width: 680px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-retina-lg);
+    animation: scaleInHero 1.2s var(--transition-apple-smooth) forwards;
+    transform-style: preserve-3d;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 30px;
+    background: rgba(233, 30, 99, 0.08);
+    border: 1px solid rgba(233, 30, 99, 0.2);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-cherry-pink);
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.pulsing-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-cherry-pink);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-cherry-pink);
+    animation: pulseDot 2s infinite ease-in-out;
+}
+
+.hero-pretitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-deep-cherry);
+    margin-bottom: 0.2rem;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 4.2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--color-dark-cherry) 0%, var(--color-cherry-pink) 60%, var(--color-soft-rose) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--color-deep-cherry);
+    margin-bottom: 2rem;
+}
+
+/* iOS Dynamic Widgets */
+.hero-widgets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--glass-border-light);
+    border-radius: 20px;
+    padding: 1rem;
+    margin: 0 auto 2rem auto;
+    backdrop-filter: blur(10px);
+}
+
+.widget-box {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem;
+}
+
+.widget-val {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-cherry-pink);
+}
+
+.widget-lbl {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-dark-cherry);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.widget-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(233, 30, 99, 0.2);
+}
+
+.hero-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-dark-cherry);
+    opacity: 0.85;
+    margin-bottom: 2.5rem;
+}
+
+/* iOS Glass Buttons */
+.ios-glass-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.35s var(--transition-apple-smooth);
+    outline: none;
+}
+
+.ios-glass-btn.primary {
+    background: linear-gradient(135deg, var(--color-cherry-pink), var(--color-deep-cherry));
+    color: var(--color-pure-white);
+    box-shadow: 0 10px 25px rgba(233, 30, 99, 0.35);
+}
+
+.ios-glass-btn.primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(233, 30, 99, 0.5);
+}
+
+.ios-glass-btn.secondary {
+    background: var(--glass-bg-hover);
+    color: var(--color-deep-cherry);
+    border: 1px solid var(--glass-border-light);
+}
+
+.ios-glass-btn.secondary:hover {
+    background: var(--color-pure-white);
+    transform: translateY(-2px);
+}
+
+.lockscreen-footer {
+    position: absolute;
+    bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.8;
+}
+
+.swipe-bar {
+    width: 130px;
+    height: 5px;
+    background: var(--color-cherry-pink);
+    border-radius: 10px;
+    opacity: 0.6;
+    animation: bounceBar 2s infinite;
+}
+
+.lockscreen-footer p {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-deep-cherry);
+}
+
+/* ==========================================================================
+   4. DASHBOARD & GLASS NAVBAR
+   ========================================================================== */
+.dashboard-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 110px 2rem 80px 2rem;
+    opacity: 1;
+    transition: opacity 0.8s var(--transition-apple-smooth);
+}
+
+.dashboard-container.hidden,
+.hero-screen.hidden,
+.ios-modal-backdrop.hidden {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* VisionOS Glass Navbar */
+.glass-navbar {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 4rem);
+    max-width: 1200px;
+    height: 65px;
+    background: var(--glass-bg-primary);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid var(--glass-border-light);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.8rem;
+    z-index: 100;
+    box-shadow: var(--shadow-retina-md);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-logo-icon {
+    font-size: 1.4rem;
+}
+
+.nav-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-dark-cherry);
+}
+
+.status-chip {
+    background: rgba(233, 30, 99, 0.1);
+    color: var(--color-cherry-pink);
+    border: 1px solid rgba(233, 30, 99, 0.2);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.nav-icon-btn {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--glass-border-light);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark-cherry);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-icon-btn:hover {
+    background: var(--color-pure-white);
+    transform: scale(1.08);
+}
+
+/* Dashboard Banner */
+.dashboard-banner {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.banner-glass-content {
+    background: var(--glass-bg-primary);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border-light);
+    display: inline-block;
+    padding: 2.5rem 3.5rem;
+    border-radius: 30px;
+    box-shadow: var(--shadow-retina-sm);
+}
+
+.banner-glass-content h2 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--color-dark-cherry);
+    margin-bottom: 0.5rem;
+}
+
+.banner-glass-content p {
+    color: var(--color-deep-cherry);
+    font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   5. 15 GIFT CARDS GRID & CARDS DESIGN
+   ========================================================================== */
+.gifts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.gift-card-wrapper {
+    perspective: 1000px;
+}
+
+.glass-card {
+    position: relative;
+    background: var(--glass-bg-primary);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid var(--glass-border-light);
+    border-radius: 28px;
+    padding: 2rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 270px;
+    box-shadow: var(--shadow-retina-sm);
+    cursor: pointer;
+    transition: all 0.4s var(--transition-apple-spring);
+    overflow: hidden;
+}
+
+.glass-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--shadow-retina-lg);
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-glow);
+}
+
+.highlight-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(248, 187, 208, 0.45));
+    border: 2px solid var(--color-cherry-pink);
+    box-shadow: var(--shadow-glow-cherry);
+}
+
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(233, 30, 99, 0.15), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.glass-card:hover .card-glow {
+    opacity: 1;
+}
+
+.card-header-tag {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gift-num {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-cherry-pink);
+    opacity: 0.8;
+}
+
+.gift-status-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: rgba(233, 30, 99, 0.08);
+    color: var(--color-deep-cherry);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.gift-status-badge.special {
+    background: var(--color-cherry-pink);
+    color: var(--color-pure-white);
+}
+
+.card-icon-wrapper {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.floating-icon {
+    font-size: 3.2rem;
+    display: inline-block;
+    transition: transform 0.4s var(--transition-apple-spring);
+}
+
+.glass-card:hover .floating-icon {
+    transform: scale(1.25) rotate(8deg);
+}
+
+.card-info h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-dark-cherry);
+    margin-bottom: 0.3rem;
+}
+
+.card-info p {
+    font-size: 0.88rem;
+    color: var(--color-deep-cherry);
+    opacity: 0.8;
+    line-height: 1.4;
+}
+
+.card-action {
+    margin-top: 1.2rem;
+}
+
+.view-btn {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-cherry-pink);
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.glass-card:hover .view-btn {
+    color: var(--color-dark-cherry);
+}
+
+/* ==========================================================================
+   6. RETINA MODAL DIALOG POPUP
+   ========================================================================== */
+.ios-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(74, 44, 53, 0.4);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    opacity: 1;
+    transition: opacity 0.4s var(--transition-apple-smooth);
+}
+
+.ios-modal-container {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    background: var(--glass-bg-solid);
+    border: 1px solid var(--glass-border-light);
+    border-radius: 36px;
+    box-shadow: var(--shadow-retina-lg);
+    overflow: hidden;
+    animation: modalPopIn 0.45s var(--transition-apple-spring) forwards;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark-cherry);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.modal-close-btn:hover {
+    background: rgba(233, 30, 99, 0.15);
+    color: var(--color-cherry-pink);
+    transform: rotate(90deg);
+}
+
+.modal-glass-content {
+    padding: 2.5rem 2rem 2rem 2rem;
+}
+
+.modal-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.modal-pill {
+    background: var(--color-cherry-pink);
+    color: var(--color-pure-white);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modal-date-tag {
+    font-size: 0.8rem;
+    color: var(--color-deep-cherry);
+    opacity: 0.7;
+    font-weight: 500;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-hero-icon {
+    font-size: 3.8rem;
+    margin-bottom: 0.5rem;
+    animation: floatIcon 3s ease-in-out infinite alternate;
+}
+
+.modal-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: var(--color-dark-cherry);
+}
+
+.modal-body-scroll {
+    max-height: 240px;
+    overflow-y: auto;
+    padding-right: 5px;
+    margin-bottom: 2rem;
+}
+
+.modal-body-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-dark-cherry);
+    text-align: center;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
+/* Custom Scrollbar for Modal Body */
+.modal-body-scroll::-webkit-scrollbar {
+    width: 5px;
+}
+.modal-body-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-dull-pink);
+    border-radius: 10px;
+}
+
+/* ==========================================================================
+   7. KEYFRAME ANIMATIONS
+   ========================================================================== */
+@keyframes floatOrb {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(80px, 60px) rotate(360deg); }
+}
+
+@keyframes pulseDot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+}
+
+@keyframes scaleInHero {
+    0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes modalPopIn {
+    0% { opacity: 0; transform: scale(0.82) translateY(30px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes bounceBar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes floatIcon {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .hero-title { font-size: 3rem; }
+    .glass-hero-card { padding: 2.5rem 1.5rem; }
+    .glass-navbar { width: calc(100% - 2rem); padding: 0 1rem; }
+    .dashboard-banner .banner-glass-content { padding: 1.8rem 1.5rem; }
+}
