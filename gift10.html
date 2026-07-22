@@ -1,1 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #10 — VIP Movie Pass | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f051d;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Starfield Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .gift-container {
+            min-height: 100vh;
+            padding: 100px 20px 80px 20px;
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            border-color: rgba(255, 182, 193, 0.6);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(233, 30, 99, 0.3));
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #ffffff, #ffd700, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: #fce4ec;
+            opacity: 0.85;
+        }
+
+        /* Cinema Ticket Styling */
+        .ticket-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 28px;
+            padding: 2rem;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cinema-ticket {
+            background: linear-gradient(135deg, #1c0b36 0%, #2b0c48 100%);
+            border: 2px solid #ffd700;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            text-align: left;
+        }
+
+        /* Cutout Notches for Ticket Effect */
+        .cinema-ticket::before, .cinema-ticket::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 30px;
+            background: #0f051d;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+        .cinema-ticket::before { left: -16px; border-right: 2px solid #ffd700; }
+        .cinema-ticket::after { right: -16px; border-left: 2px solid #ffd700; }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed rgba(255, 215, 0, 0.4);
+            padding-bottom: 1rem;
+        }
+
+        .ticket-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: #ffd700;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .status-pill {
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid #ffd700;
+            color: #ffd700;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .ticket-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .movie-label {
+            font-size: 0.85rem;
+            color: #ffb6c1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .movie-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #ffffff;
+            line-height: 1.1;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .ticket-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .detail-item h4 {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+        }
+
+        .detail-item p {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffd700;
+            margin-top: 2px;
+        }
+
+        /* Action Button */
+        .claim-btn {
+            margin-top: 2rem;
+            background: linear-gradient(135deg, #ffd700, #ff69b4);
+            color: #000;
+            font-weight: 800;
+            border: none;
+            padding: 16px 42px;
+            border-radius: 40px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .claim-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(255, 215, 0, 0.7);
+        }
+
+        .claimed-banner {
+            display: none;
+            margin-top: 1.5rem;
+            background: rgba(129, 199, 132, 0.15);
+            border: 1px solid #81c784;
+            color: #81c784;
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 2.1rem; }
+            .movie-title { font-size: 1.7rem; }
+            .ticket-details { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Starfield Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <div class="back-nav">
+        <a href="index.html" class="glass-btn">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="gift-container">
+        <header class="page-header">
+            <span class="page-badge">Gift #10 • VIP Movie Pass</span>
+            <h1 class="page-title">Movie Night Pass 🍿🎬</h1>
+            <p class="page-subtitle">Redeemable anytime to watch the movie <i>Obsession</i> together!</p>
+        </header>
+
+        <div class="ticket-wrapper">
+            <div class="cinema-ticket">
+                <div class="ticket-header">
+                    <span class="ticket-logo">🎬 VIP CINEMA PASS</span>
+                    <span class="status-pill" id="ticketStatus">READY TO CLAIM</span>
+                </div>
+
+                <div class="ticket-body">
+                    <span class="movie-label">Featured Presentation</span>
+                    <h2 class="movie-title">Obsession</h2>
+                </div>
+
+                <div class="ticket-details">
+                    <div class="detail-item">
+                        <h4>Co-Viewer</h4>
+                        <p>With Me ❤️</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Validity</h4>
+                        <p>Lifetime / Anytime</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Included Snacks</h4>
+                        <p>Popcorn & Unlimited Hugs</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>Ticket No.</h4>
+                        <p>#NAV-15-MOVIE</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="claim-btn" id="claimBtn" onclick="claimMoviePass()">Claim Movie Pass ✨</button>
+
+            <div class="claimed-banner" id="claimedBanner">
+                🎉 Movie Pass Activated! Let me know whenever you're ready to watch <i>Obsession</i> together!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --- BACKGROUND CANVAS ANIMATION --- */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, stars = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((width * height) / 3000);
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005,
+                    twinkleDir: Math.random() > 0.5 ? 1 : -1
+                });
+            }
+        }
+
+        function drawBackground() {
+            const grad = ctx.createLinearGradient(0, 0, 0, height);
+            grad.addColorStop(0, '#0f051d');
+            grad.addColorStop(0.5, '#1a0933');
+            grad.addColorStop(1, '#090212');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed * star.twinkleDir;
+                if (star.alpha >= 1) { star.alpha = 1; star.twinkleDir = -1; }
+                if (star.alpha <= 0.2) { star.alpha = 0.2; star.twinkleDir = 1; }
+
+                ctx.save();
+                ctx.globalAlpha = star.alpha;
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#ffd700';
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            requestAnimationFrame(drawBackground);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        drawBackground();
+
+        /* --- CLAIM TICKET LOGIC --- */
+        function claimMoviePass() {
+            localStorage.setItem('navanshi_movie_pass_claimed', 'true');
+            updateUI();
+
+            confetti({
+                particleCount: 180,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#ffd700', '#ff69b4', '#ffffff', '#9c27b0']
+            });
+        }
+
+        function updateUI() {
+            const isClaimed = localStorage.getItem('navanshi_movie_pass_claimed');
+            if (isClaimed) {
+                document.getElementById('ticketStatus').innerText = 'PASS ACTIVATED ✨';
+                document.getElementById('ticketStatus').style.background = 'rgba(129, 199, 132, 0.3)';
+                document.getElementById('ticketStatus').style.color = '#81c784';
+                document.getElementById('ticketStatus').style.borderColor = '#81c784';
+
+                document.getElementById('claimBtn').style.display = 'none';
+                document.getElementById('claimedBanner').style.display = 'block';
+            }
+        }
+
+        // Check if already claimed on page load
+        window.onload = updateUI;
+    </script>
+</body>
+</html>
