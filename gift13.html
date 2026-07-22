@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #13 — Karaoke & Playlist Lounge 🎤 | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Reuse Main Glassmorphism Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .gift-page-container {
+            min-height: 100vh;
+            padding: 100px 20px 80px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: rgba(233, 30, 99, 0.15);
+            color: var(--color-cherry-pink);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .page-title {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: var(--color-deep-cherry);
+            opacity: 0.85;
+        }
+
+        /* Player Card */
+        .player-card {
+            background: var(--glass-bg-primary);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid var(--glass-border-light);
+            border-radius: 32px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-retina-lg);
+            width: 100%;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .album-art {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 12px 30px rgba(233, 30, 99, 0.3);
+            animation: spinDisc 12s linear infinite paused;
+            border: 4px solid #fff;
+        }
+
+        .playing .album-art {
+            animation-play-state: running;
+        }
+
+        @keyframes spinDisc {
+            100% { transform: rotate(360deg); }
+        }
+
+        .song-title {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.3rem;
+        }
+
+        .song-artist {
+            font-size: 0.95rem;
+            color: var(--color-cherry-pink);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Lyrics Display Screen */
+        .lyrics-box {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid var(--glass-border-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 1.8rem;
+            font-style: italic;
+            transition: all 0.3s ease;
+        }
+
+        /* Controls */
+        .controls-row {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ctrl-btn {
+            background: #fff;
+            border: 1px solid var(--glass-border-light);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-retina-sm);
+            transition: all 0.3s var(--transition-apple-spring);
+        }
+
+        .ctrl-btn:hover {
+            transform: scale(1.1);
+            background: var(--color-soft-rose);
+        }
+
+        .ctrl-btn.play-btn {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--color-cherry-pink), var(--color-dark-cherry));
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        /* Song List Grid */
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
+            width: 100%;
+        }
+
+        .playlist-item {
+            background: var(--glass-bg-primary);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border-light);
+            border-radius: 20px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-apple-spring);
+        }
+
+        .playlist-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-cherry-pink);
+            box-shadow: var(--shadow-retina-md);
+        }
+
+        .playlist-item.active {
+            border-color: var(--color-cherry-pink);
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .item-icon {
+            font-size: 2rem;
+        }
+
+        .item-info {
+            text-align: left;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--color-dark-cherry);
+        }
+
+        .item-artist {
+            font-size: 0.8rem;
+            color: var(--color-deep-cherry);
+            opacity: 0.8;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Background -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Glowing Orbs -->
+    <div class="ambient-glows" aria-hidden="true">
+        <div class="orb orb-pale"></div>
+        <div class="orb orb-cherry"></div>
+        <div class="orb orb-white"></div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-nav">
+        <a href="index.html" class="ios-glass-btn secondary" style="padding: 10px 20px; font-size: 0.9rem;">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="gift-page-container">
+        <header class="page-header">
+            <span class="page-badge">Gift #13 • Secret Lounge</span>
+            <h1 class="page-title">Karaoke & Playlist Lounge 🎤</h1>
+            <p class="page-subtitle">Sing along to Navanshi's 15th Birthday Anthem Playlist!</p>
+        </header>
+
+        <!-- Main Music Player -->
+        <div class="player-card" id="playerCard">
+            <div class="album-art" id="albumArt">🎵</div>
+            <h2 class="song-title" id="songTitle">15 & Fabulous</h2>
+            <div class="song-artist" id="songArtist">Navanshi’s Official Birthday Anthem</div>
+
+            <div class="lyrics-box" id="lyricsBox">
+                "It’s Chapter 15 and the vibes are unmatched..."
+            </div>
+
+            <div class="controls-row">
+                <button class="ctrl-btn" onclick="prevSong()">⏮️</button>
+                <button class="ctrl-btn play-btn" id="playBtn" onclick="togglePlay()">▶️</button>
+                <button class="ctrl-btn" onclick="nextSong()">⏭️</button>
+            </div>
+        </div>
+
+        <!-- Playlist Picker -->
+        <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-dark-cherry); margin-bottom: 1rem; width: 100%; text-align: left;">
+             Birthday Tracklist
+        </h3>
+
+        <div class="playlist-grid" id="playlistGrid"></div>
+    </div>
+
+    <!-- Script connection -->
+    <script src="script.js"></script>
+
+    <script>
+        const tracklist = [
+            {
+                title: "15 & Fabulous",
+                artist: "Chapter Fifteen Anthem",
+                icon: "👑",
+                lyric: "♪ 'Stepping into 15 with style, grace, and unmatched energy!' ♪"
+            },
+            {
+                title: "Sweet Fifteen Dreams",
+                artist: "The Celebration Mix",
+                icon: "🎂",
+                lyric: "♪ 'Make a wish, blow out the candles, the future is glowing bright!' ♪"
+            },
+            {
+                title: "Main Character Energy",
+                artist: "Navanshi Solo Remix",
+                icon: "✨",
+                lyric: "♪ 'Shining brighter than the stars, today is all about you!' ♪"
+            },
+            {
+                title: "Unstoppable Vibes",
+                artist: "Party Edition",
+                icon: "🎉",
+                lyric: "♪ 'Dance like everyone's watching, turning 15 only happens once!' ♪"
+            }
+        ];
+
+        let currentIndex = 0;
+        let isPlaying = false;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderPlaylist();
+            loadTrack(0);
+        });
+
+        function renderPlaylist() {
+            const grid = document.getElementById("playlistGrid");
+            grid.innerHTML = "";
+
+            tracklist.forEach((track, idx) => {
+                const item = document.createElement("div");
+                item.className = `playlist-item ${idx === currentIndex ? 'active' : ''}`;
+                item.onclick = () => {
+                    loadTrack(idx);
+                    if (!isPlaying) togglePlay();
+                };
+
+                item.innerHTML = `
+                    <div class="item-icon">${track.icon}</div>
+                    <div class="item-info">
+                        <div class="item-title">${track.title}</div>
+                        <div class="item-artist">${track.artist}</div>
+                    </div>
+                `;
+                grid.appendChild(item);
+            });
+        }
+
+        function loadTrack(index) {
+            currentIndex = index;
+            const track = tracklist[currentIndex];
+
+            document.getElementById("songTitle").innerText = track.title;
+            document.getElementById("songArtist").innerText = track.artist;
+            document.getElementById("albumArt").innerText = track.icon;
+            document.getElementById("lyricsBox").innerText = track.lyric;
+
+            renderPlaylist();
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const playBtn = document.getElementById("playBtn");
+            const playerCard = document.getElementById("playerCard");
+
+            if (isPlaying) {
+                playBtn.innerText = "⏸️";
+                playerCard.classList.add("playing");
+                if (typeof triggerConfettiBurst === "function") {
+                    triggerConfettiBurst();
+                }
+            } else {
+                playBtn.innerText = "▶️";
+                playerCard.classList.remove("playing");
+            }
+        }
+
+        function nextSong() {
+            currentIndex = (currentIndex + 1) % tracklist.length;
+            loadTrack(currentIndex);
+        }
+
+        function prevSong() {
+            currentIndex = (currentIndex - 1 + tracklist.length) % tracklist.length;
+            loadTrack(currentIndex);
+        }
+    </script>
+</body>
+</html>
