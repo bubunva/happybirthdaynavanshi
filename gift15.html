@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #15 — The Birthday Time Capsule 🍾 | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Reuse Main Glassmorphism Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .gift-page-container {
+            min-height: 100vh;
+            padding: 100px 20px 80px 20px;
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: rgba(233, 30, 99, 0.15);
+            color: var(--color-cherry-pink);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .page-title {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: var(--color-deep-cherry);
+            opacity: 0.85;
+        }
+
+        /* Capsule Main Card */
+        .capsule-card {
+            background: var(--glass-bg-primary);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid var(--glass-border-light);
+            border-radius: 32px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-retina-lg);
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .capsule-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 10px 20px rgba(233, 30, 99, 0.3));
+            animation: floatBottle 3s ease-in-out infinite;
+        }
+
+        @keyframes floatBottle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .textarea-box {
+            width: 100%;
+            max-width: 550px;
+            height: 130px;
+            padding: 15px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border-light);
+            background: rgba(255, 255, 255, 0.75);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--color-dark-cherry);
+            margin: 1.2rem 0;
+            outline: none;
+            resize: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .textarea-box:focus {
+            border-color: var(--color-cherry-pink);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Saved Wishes List */
+        .wishes-container {
+            width: 100%;
+            max-width: 550px;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wish-scroll-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px dashed var(--color-cherry-pink);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            color: var(--color-dark-cherry);
+            text-align: left;
+            position: relative;
+            box-shadow: var(--shadow-retina-sm);
+        }
+
+        .wish-scroll-card::before {
+            content: "📜 Sealed Wish for 16:";
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-cherry-pink);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Background -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Glowing Orbs -->
+    <div class="ambient-glows" aria-hidden="true">
+        <div class="orb orb-pale"></div>
+        <div class="orb orb-cherry"></div>
+        <div class="orb orb-white"></div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-nav">
+        <a href="index.html" class="ios-glass-btn secondary" style="padding: 10px 20px; font-size: 0.9rem;">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="gift-page-container">
+        <header class="page-header">
+            <span class="page-badge">Gift #15 • The Grand Finale</span>
+            <h1 class="page-title">The Birthday Time Capsule 🍾</h1>
+            <p class="page-subtitle">Write a secret message to yourself to be opened on your 16th Birthday!</p>
+        </header>
+
+        <div class="capsule-card">
+            <div class="capsule-icon">🍾</div>
+
+            <textarea id="wishInput" class="textarea-box" placeholder="Write a wish, a goal, or a message for 16-year-old Navanshi..."></textarea>
+
+            <button class="ios-glass-btn primary" onclick="sealWish()" style="padding: 14px 36px; font-size: 1.05rem;">
+                🔒 Seal in Capsule & Celebrate!
+            </button>
+
+            <div class="wishes-container" id="wishesContainer">
+                <!-- Sealed Wishes will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Script connection -->
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadSavedWishes();
+        });
+
+        function sealWish() {
+            const input = document.getElementById("wishInput");
+            const text = input.value.trim();
+
+            if (!text) {
+                alert("Please write a wish before sealing the bottle!");
+                return;
+            }
+
+            // Save to localStorage
+            let saved = JSON.parse(localStorage.getItem("navanshi_capsule_wishes") || "[]");
+            saved.push(text);
+            localStorage.setItem("navanshi_capsule_wishes", JSON.stringify(saved));
+
+            input.value = "";
+            renderWishes();
+
+            if (typeof triggerConfettiBurst === "function") {
+                triggerConfettiBurst();
+            }
+        }
+
+        function loadSavedWishes() {
+            renderWishes();
+        }
+
+        function renderWishes() {
+            const container = document.getElementById("wishesContainer");
+            const saved = JSON.parse(localStorage.getItem("navanshi_capsule_wishes") || "[]");
+
+            container.innerHTML = "";
+
+            if (saved.length === 0) {
+                container.innerHTML = `<p style="font-size: 0.9rem; color: var(--color-deep-cherry); opacity: 0.7;">No wishes sealed yet. Type your first message above!</p>`;
+                return;
+            }
+
+            saved.forEach(wish => {
+                const card = document.createElement("div");
+                card.className = "wish-scroll-card";
+                card.innerText = wish;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
