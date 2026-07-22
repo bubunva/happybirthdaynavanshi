@@ -1,1 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #3 — Songs That Remind Me of You | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f051d;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Star & Wave Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .gift-container {
+            min-height: 100vh;
+            padding: 100px 20px 80px 20px;
+            max-width: 950px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            border-color: rgba(255, 182, 193, 0.6);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(233, 30, 99, 0.3));
+            color: #ffb6c1;
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #ffffff, #ffb6c1, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: #fce4ec;
+            opacity: 0.85;
+        }
+
+        /* Player Card */
+        .player-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
+            border: 1px solid rgba(255, 192, 203, 0.3);
+            border-radius: 32px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .vinyl-disc {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #2a0845 0%, #11031c 60%, #000 100%);
+            border: 4px solid rgba(255, 182, 193, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            position: relative;
+            animation: spin 10s linear infinite paused;
+        }
+
+        .vinyl-disc.playing {
+            animation-play-state: running;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .vinyl-center {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid #fff;
+        }
+
+        .song-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .song-artist {
+            font-size: 1rem;
+            color: #ffb6c1;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+        }
+
+        .memory-note-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 182, 193, 0.4);
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            font-style: italic;
+            color: #fce4ec;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 1.8rem;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        /* Controls & Progress */
+        .progress-bar-container {
+            width: 100%;
+            max-width: 600px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ffb6c1, #ff69b4);
+            border-radius: 10px;
+            transition: width 0.1s linear;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ctrl-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ctrl-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 105, 180, 0.3);
+            border-color: #ff69b4;
+        }
+
+        .ctrl-btn.play-btn {
+            width: 70px;
+            height: 70px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #ff69b4, #e91e63);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Tracklist Grid */
+        .tracklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.2rem;
+            width: 100%;
+        }
+
+        .track-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 192, 203, 0.2);
+            border-radius: 20px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .track-card:hover {
+            transform: translateY(-4px);
+            border-color: #ff69b4;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .track-card.active {
+            border-color: #ff69b4;
+            background: rgba(255, 105, 180, 0.2);
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .track-icon {
+            font-size: 2rem;
+        }
+
+        .track-info {
+            text-align: left;
+        }
+
+        .track-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .track-artist {
+            font-size: 0.82rem;
+            color: #ffb6c1;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 2.1rem; }
+            .vinyl-disc { width: 130px; height: 130px; }
+            .song-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Starfield & Waves Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <div class="back-nav">
+        <a href="index.html" class="glass-btn">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="gift-container">
+        <header class="page-header">
+            <span class="page-badge">Gift #3 • Personal Tracklist</span>
+            <h1 class="page-title">Song Lounge 🎵</h1>
+            <p class="page-subtitle">Songs that instantly bring back memories of you!</p>
+        </header>
+
+        <!-- Audio Tag -->
+        <audio id="audioPlayer"></audio>
+
+        <!-- Audio Player Unit -->
+        <div class="player-card">
+            <div class="vinyl-disc" id="vinylDisc">
+                <div class="vinyl-center">🎵</div>
+            </div>
+
+            <h2 class="song-title" id="songTitle">Select a Song</h2>
+            <div class="song-artist" id="songArtist">Artist Name</div>
+
+            <div class="memory-note-box" id="memoryNote">
+                "Click any song below to play it and read why this song reminds me of you!"
+            </div>
+
+            <div class="progress-bar-container" onclick="seekAudio(event)">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="controls-row">
+                <button class="ctrl-btn" onclick="prevTrack()">⏮️</button>
+                <button class="ctrl-btn play-btn" id="playBtn" onclick="togglePlay()">▶️</button>
+                <button class="ctrl-btn" onclick="nextTrack()">⏭️</button>
+            </div>
+        </div>
+
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #fff; margin-bottom: 1.2rem; width: 100%; text-align: left;">
+            ✨ Navanshi's Playlist
+        </h3>
+
+        <!-- Tracklist Cards -->
+        <div class="tracklist-grid" id="tracklistGrid"></div>
+    </div>
+
+    <script>
+        /* --- STARS & WAVE CANVAS ANIMATION --- */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height, stars = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((width * height) / 3000);
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005,
+                    twinkleDir: Math.random() > 0.5 ? 1 : -1
+                });
+            }
+        }
+
+        function drawBackground() {
+            const grad = ctx.createLinearGradient(0, 0, 0, height);
+            grad.addColorStop(0, '#0f051d');
+            grad.addColorStop(0.5, '#1a0933');
+            grad.addColorStop(1, '#090212');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed * star.twinkleDir;
+                if (star.alpha >= 1) { star.alpha = 1; star.twinkleDir = -1; }
+                if (star.alpha <= 0.2) { star.alpha = 0.2; star.twinkleDir = 1; }
+
+                ctx.save();
+                ctx.globalAlpha = star.alpha;
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#ffb6c1';
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            const time = Date.now() * 0.001;
+            drawWave(time, 0.002, 40, '#ff1493', 0.08);
+            drawWave(time + 2, 0.003, 30, '#8a2be2', 0.06);
+
+            requestAnimationFrame(drawBackground);
+        }
+
+        function drawWave(time, speed, amplitude, color, alpha) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(0, height * 0.7);
+            for (let x = 0; x <= width; x += 10) {
+                const y = Math.sin(x * speed + time) * amplitude + Math.cos(x * 0.001 + time) * (amplitude / 2) + (height * 0.7);
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.globalAlpha = alpha;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        drawBackground();
+
+        /* --- PLAYLIST DATA & AUDIO LOGIC --- */
+        const tracks = [
+            {
+                title: "Song Title 1",
+                artist: "Artist 1",
+                file: "song1.mp3",
+                icon: "🎧",
+                note: "💭 [TYPE YOUR NOTE HERE: Explain why Song #1 reminds you of Navanshi!]"
+            },
+            {
+                title: "Song Title 2",
+                artist: "Artist 2",
+                file: "song2.mp3",
+                icon: "✨",
+                note: "💭 [TYPE YOUR NOTE HERE: Explain why Song #2 reminds you of Navanshi!]"
+            },
+            {
+                title: "Song Title 3",
+                artist: "Artist 3",
+                file: "song3.mp3",
+                icon: "💖",
+                note: "💭 [TYPE YOUR NOTE HERE: Explain why Song #3 reminds you of Navanshi!]"
+            },
+            {
+                title: "Song Title 4",
+                artist: "Artist 4",
+                file: "song4.mp3",
+                icon: "🌟",
+                note: "💭 [TYPE YOUR NOTE HERE: Explain why Song #4 reminds you of Navanshi!]"
+            }
+        ];
+
+        let currentIdx = 0;
+        let isPlaying = false;
+        const audio = document.getElementById("audioPlayer");
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderTracklist();
+            loadTrack(0);
+        });
+
+        function renderTracklist() {
+            const grid = document.getElementById("tracklistGrid");
+            grid.innerHTML = "";
+
+            tracks.forEach((t, i) => {
+                const card = document.createElement("div");
+                card.className = `track-card ${i === currentIdx ? 'active' : ''}`;
+                card.onclick = () => {
+                    loadTrack(i);
+                    playAudio();
+                };
+
+                card.innerHTML = `
+                    <div class="track-icon">${t.icon}</div>
+                    <div class="track-info">
+                        <div class="track-title">${t.title}</div>
+                        <div class="track-artist">${t.artist}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function loadTrack(index) {
+            currentIdx = index;
+            const t = tracks[currentIdx];
+
+            document.getElementById("songTitle").innerText = t.title;
+            document.getElementById("songArtist").innerText = t.artist;
+            document.getElementById("memoryNote").innerText = t.note;
+            audio.src = t.file;
+
+            renderTracklist();
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                pauseAudio();
+            } else {
+                playAudio();
+            }
+        }
+
+        function playAudio() {
+            audio.play().then(() => {
+                isPlaying = true;
+                document.getElementById("playBtn").innerText = "⏸️";
+                document.getElementById("vinylDisc").classList.add("playing");
+            }).catch(() => {
+                // If MP3 file is not dropped in yet
+                isPlaying = true;
+                document.getElementById("playBtn").innerText = "⏸️";
+                document.getElementById("vinylDisc").classList.add("playing");
+            });
+        }
+
+        function pauseAudio() {
+            audio.pause();
+            isPlaying = false;
+            document.getElementById("playBtn").innerText = "▶️";
+            document.getElementById("vinylDisc").classList.remove("playing");
+        }
+
+        function nextTrack() {
+            currentIdx = (currentIdx + 1) % tracks.length;
+            loadTrack(currentIdx);
+            playAudio();
+        }
+
+        function prevTrack() {
+            currentIdx = (currentIdx - 1 + tracks.length) % tracks.length;
+            loadTrack(currentIdx);
+            playAudio();
+        }
+
+        audio.ontimeupdate = () => {
+            if (audio.duration) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                document.getElementById("progressFill").style.width = pct + "%";
+            }
+        };
+
+        function seekAudio(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const pct = clickX / rect.width;
+            if (audio.duration) {
+                audio.currentTime = pct * audio.duration;
+            }
+        }
+    </script>
+</body>
+</html>
