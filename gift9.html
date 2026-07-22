@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Gift #9 — 15 Reasons Why You’re Amazing 💖 | Navanshi’s 15th</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Reuse Main Glassmorphism Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .gift-page-container {
+            min-height: 100vh;
+            padding: 100px 20px 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: rgba(233, 30, 99, 0.1);
+            color: var(--color-cherry-pink);
+            border: 1px solid rgba(233, 30, 99, 0.2);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .page-title {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            color: var(--color-dark-cherry);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.05rem;
+            color: var(--color-deep-cherry);
+            opacity: 0.85;
+        }
+
+        /* 3D Flip Card Grid */
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 200px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.7s var(--transition-apple-spring);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-retina-md);
+        }
+
+        /* Front Styling */
+        .flip-card-front {
+            background: var(--glass-bg-primary);
+            backdrop-filter: blur(25px) saturate(170%);
+            -webkit-backdrop-filter: blur(25px) saturate(170%);
+            border: 1px solid var(--glass-border-light);
+            transition: border-color 0.3s ease;
+        }
+
+        .flip-card:hover .flip-card-front {
+            border-color: var(--glass-border-glow);
+            box-shadow: var(--shadow-retina-lg);
+        }
+
+        .card-number {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--color-cherry-pink);
+            margin-bottom: 0.2rem;
+        }
+
+        .card-hint {
+            font-size: 0.82rem;
+            color: var(--color-deep-cherry);
+            opacity: 0.75;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* Back Styling */
+        .flip-card-back {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(252, 228, 236, 0.95));
+            border: 1px solid var(--color-cherry-pink);
+            transform: rotateY(180deg);
+        }
+
+        .reason-emoji {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .reason-text {
+            font-size: 0.92rem;
+            color: var(--color-dark-cherry);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 2.1rem; }
+            .reasons-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+            .flip-card { height: 180px; }
+            .card-number { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Background -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Glowing Orbs -->
+    <div class="ambient-glows" aria-hidden="true">
+        <div class="orb orb-pale"></div>
+        <div class="orb orb-cherry"></div>
+        <div class="orb orb-white"></div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-nav">
+        <a href="index.html" class="ios-glass-btn secondary" style="padding: 10px 20px; font-size: 0.9rem;">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="gift-page-container">
+        <header class="page-header">
+            <span class="page-badge">Gift #9 • Chapter Fifteen</span>
+            <h1 class="page-title">15 Reasons Why You’re Amazing 💖</h1>
+            <p class="page-subtitle">Tap each card to flip and discover why turning 15 with you is so special!</p>
+        </header>
+
+        <!-- 15 Interactive Flip Cards -->
+        <div class="reasons-grid" id="reasonsGrid"></div>
+    </div>
+
+    <!-- Script connection -->
+    <script src="script.js"></script>
+
+    <script>
+        const reasons = [
+            { num: 1, emoji: "🌸", text: "Your smile instantly brightens up any room you walk into." },
+            { num: 2, emoji: "✨", text: "You have an unmatched aesthetic and effortlessly cool style." },
+            { num: 3, emoji: "👑", text: "You handle everything with true grace, kindness, and poise." },
+            { num: 4, emoji: "🍰", text: "You always know how to make every celebration ten times sweeter." },
+            { num: 5, emoji: "🎧", text: "Your music recommendations and playlist vibes are always top-tier." },
+            { num: 6, emoji: "💌", text: "You are the most caring and thoughtful friend anyone could ask for." },
+            { num: 7, emoji: "🎨", text: "Your creativity and eye for beauty inspire everyone around you." },
+            { num: 8, emoji: "💖", text: "You bring genuine warmth, laughter, and joy into all our lives." },
+            { num: 9, emoji: "🌟", text: "You stay true to yourself no matter what, and that is admirable." },
+            { num: 10, emoji: "🍿", text: "Movie nights and hanging out with you are always the highlight of the week." },
+            { num: 11, emoji: "🧠", text: "You are super smart, witty, and always have clever insights." },
+            { num: 12, emoji: "🍦", text: "You know how to enjoy the simple pleasures in life to the fullest." },
+            { num: 13, emoji: "💪", text: "You face every challenge with courage, positivity, and confidence." },
+            { num: 14, emoji: "🎀", text: "You make life feel like a beautiful, magical fairytale." },
+            { num: 15, emoji: "🎂", text: "Because you are uniquely NAVANSHI—and today is ALL about you!" }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const grid = document.getElementById("reasonsGrid");
+
+            reasons.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "flip-card";
+                card.onclick = () => {
+                    card.classList.toggle("flipped");
+                    if (typeof triggerConfettiBurst === "function" && card.classList.contains("flipped")) {
+                        triggerConfettiBurst();
+                    }
+                };
+
+                card.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card-number">#${item.num}</div>
+                            <div class="card-hint">Tap to Flip ✦</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="reason-emoji">${item.emoji}</div>
+                            <div class="reason-text">${item.text}</div>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        });
+    </script>
+</body>
+</html>
