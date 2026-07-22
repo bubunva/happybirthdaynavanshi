@@ -3,24 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Gift #2 — 15 Custom Memes 😂 | Navanshi’s 15th</title>
+    <title>Gift #2 — 15 Special Memes | Navanshi’s 15th</title>
     
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
     
-    <!-- Reuse Main Glassmorphism Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 
     <style>
-        .gift-page-container {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f051d;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Star & Wave Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .gift-container {
             min-height: 100vh;
             padding: 100px 20px 80px 20px;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .back-nav {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 100;
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            border-color: rgba(255, 182, 193, 0.6);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
         }
 
         .page-header {
@@ -30,70 +91,73 @@
 
         .page-badge {
             display: inline-block;
-            background: rgba(233, 30, 99, 0.1);
-            color: var(--color-cherry-pink);
-            border: 1px solid rgba(233, 30, 99, 0.2);
-            padding: 6px 18px;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(233, 30, 99, 0.3));
+            color: #ffb6c1;
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            padding: 6px 20px;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.2);
         }
 
         .page-title {
-            font-family: var(--font-serif);
+            font-family: 'Playfair Display', serif;
             font-size: 2.8rem;
-            color: var(--color-dark-cherry);
+            background: linear-gradient(135deg, #ffffff, #ffb6c1, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
         }
 
         .page-subtitle {
             font-size: 1.05rem;
-            color: var(--color-deep-cherry);
+            color: #fce4ec;
             opacity: 0.85;
         }
 
         /* Meme Grid */
         .meme-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
         }
 
         .meme-card {
-            background: var(--glass-bg-primary);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 1px solid var(--glass-border-light);
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 192, 203, 0.25);
             border-radius: 24px;
             padding: 1.2rem;
-            box-shadow: var(--shadow-retina-sm);
-            cursor: pointer;
-            transition: all 0.4s var(--transition-apple-spring);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
-            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .meme-card:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-retina-lg);
-            border-color: var(--glass-border-glow);
-            background: var(--glass-bg-hover);
+            border-color: rgba(255, 105, 180, 0.6);
+            box-shadow: 0 20px 45px rgba(255, 105, 180, 0.25);
         }
 
         .meme-img-container {
             width: 100%;
-            aspect-ratio: 1 / 1;
+            height: 250px;
             border-radius: 16px;
             overflow: hidden;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
+            cursor: pointer;
             position: relative;
         }
 
@@ -105,240 +169,293 @@
         }
 
         .meme-card:hover .meme-img-container img {
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
-        .meme-placeholder-icon {
-            font-size: 3rem;
-            opacity: 0.6;
+        .meme-placeholder-text {
+            color: #ffb6c1;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 1rem;
         }
 
         .meme-caption {
-            font-size: 0.92rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: #fff;
+            margin: 1rem 0 0.8rem 0;
             font-weight: 600;
-            color: var(--color-dark-cherry);
             text-align: center;
-            line-height: 1.4;
         }
 
-        .meme-number {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--color-cherry-pink);
-            margin-bottom: 0.4rem;
-            text-transform: uppercase;
+        /* Reaction Bar */
+        .reaction-bar {
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 0.8rem;
+            margin-top: auto;
         }
 
-        /* Lightbox Overlay */
+        .react-btn {
+            background: transparent;
+            border: none;
+            color: #ffb6c1;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.2s ease, color 0.2s ease;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .react-btn:hover {
+            transform: scale(1.15);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Lightbox Modal */
         .lightbox-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(40, 20, 28, 0.85);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: rgba(15, 5, 29, 0.92);
+            backdrop-filter: blur(20px);
             z-index: 1000;
-            display: flex;
-            justify-content: center;
+            display: none;
             align-items: center;
+            justify-content: center;
             padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
         }
 
         .lightbox-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .lightbox-card {
-            background: var(--glass-bg-solid);
-            border: 1px solid var(--glass-border-light);
-            border-radius: 32px;
-            max-width: 550px;
-            width: 100%;
-            padding: 2rem;
-            box-shadow: var(--shadow-retina-lg);
-            text-align: center;
-            position: relative;
-            transform: scale(0.85);
-            transition: transform 0.4s var(--transition-apple-spring);
-        }
-
-        .lightbox-modal.active .lightbox-card {
-            transform: scale(1);
-        }
-
-        .lightbox-img-wrapper {
-            width: 100%;
-            max-height: 380px;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 1.2rem;
-            background: #fff;
             display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .lightbox-img-wrapper img {
-            max-width: 100%;
-            max-height: 380px;
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.4);
+            border: 2px solid rgba(255, 182, 193, 0.5);
             object-fit: contain;
         }
 
         .lightbox-close {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.08);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            color: var(--color-dark-cherry);
+            top: 30px;
+            right: 40px;
+            color: #fff;
+            font-size: 2.5rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.2s ease;
         }
 
         .lightbox-close:hover {
-            background: var(--color-cherry-pink);
-            color: #fff;
-        }
-
-        .back-nav {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            z-index: 100;
+            transform: scale(1.2);
+            color: #ff69b4;
         }
 
         @media (max-width: 600px) {
-            .page-title { font-size: 2rem; }
-            .meme-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
-            .meme-card { padding: 0.8rem; }
+            .page-title { font-size: 2.1rem; }
+            .meme-img-container { height: 210px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Canvas Background -->
-    <canvas id="ambient-canvas"></canvas>
+    <!-- Starfield & Waves Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
 
-    <!-- Glowing Orbs -->
-    <div class="ambient-glows" aria-hidden="true">
-        <div class="orb orb-pale"></div>
-        <div class="orb orb-cherry"></div>
-        <div class="orb orb-white"></div>
-    </div>
-
-    <!-- Back Button -->
+    <!-- Navigation -->
     <div class="back-nav">
-        <a href="index.html" class="ios-glass-btn secondary" style="padding: 10px 20px; font-size: 0.9rem;">
+        <a href="index.html" class="glass-btn">
             ← Back to Dashboard
         </a>
     </div>
 
-    <!-- Main Gallery Experience -->
-    <div class="gift-page-container">
+    <div class="gift-container">
         <header class="page-header">
-            <span class="page-badge">Gift #2 • Chapter Fifteen</span>
-            <h1 class="page-title">15 Memes for Navanshi 😂</h1>
-            <p class="page-subtitle">Handcrafted memes for all our inside jokes. Tap any card to enlarge!</p>
+            <span class="page-badge">Gift #2 • Made By Me</span>
+            <h1 class="page-title">15 Special Memes 🤣</h1>
+            <p class="page-subtitle">Handcrafted memes created exclusively for Navanshi’s 15th Birthday!</p>
         </header>
 
         <!-- 15 Memes Grid -->
-        <div class="meme-grid" id="memeGrid">
-            <!-- Dynamically populated by JS below -->
-        </div>
+        <div class="meme-grid" id="memeGrid"></div>
     </div>
 
-    <!-- Lightbox Pop-up Modal -->
-    <div class="lightbox-modal" id="lightboxModal">
-        <div class="lightbox-card">
-            <button class="lightbox-close" id="lightboxClose">&times;</button>
-            <div class="lightbox-img-wrapper" id="lightboxImgWrapper">
-                <!-- Enlarged image or emoji inserted here -->
-            </div>
-            <div class="meme-number" id="lightboxNum">Meme #1</div>
-            <div class="meme-caption" id="lightboxCaption">Meme caption goes here</div>
-        </div>
+    <!-- Fullscreen Lightbox -->
+    <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightboxImg" src="" alt="Zoomed Meme">
     </div>
-
-    <!-- Load Canvas Script -->
-    <script src="script.js"></script>
 
     <script>
-        // 15 Custom Memes Data
-        // REPLACE image paths (e.g., "images/meme1.jpg") with your actual meme images!
-        const MEMES_DATA = [
-            { id: 1, title: "When Navanshi starts overthinking simple things", image: "images/meme1.jpg", emoji: "🤪" },
-            { id: 2, title: "Navanshi trying to decide what to eat", image: "images/meme2.jpg", emoji: "🍕" },
-            { id: 3, title: "That specific look she gives when I say something silly", image: "images/meme3.jpg", emoji: "👀" },
-            { id: 4, title: "When she claims she isn't sleepy at 2 AM", image: "images/meme4.jpg", emoji: "🥱" },
-            { id: 5, title: "Navanshi winning every argument effortlessly", image: "images/meme5.jpg", emoji: "👑" },
-            { id: 6, title: "How fast she replies when she actually wants to chat", image: "images/meme6.jpg", emoji: "⚡" },
-            { id: 7, title: "When her favorite song comes on in public", image: "images/meme7.jpg", emoji: "🎵" },
-            { id: 8, title: "Navanshi pretending to listen to advice", image: "images/meme8.jpg", emoji: "😇" },
-            { id: 9, title: "Me explaining a joke for the 3rd time", image: "images/meme9.jpg", emoji: "🤦‍♂️" },
-            { id: 10, title: "When someone says Navanshi isn't the cutest 15yo", image: "images/meme10.jpg", emoji: "😤" },
-            { id: 11, title: "Navanshi entering her 15th year like a boss", image: "images/meme11.jpg", emoji: "✨" },
-            { id: 12, title: "Her reaction when I send a terrible meme", image: "images/meme12.jpg", emoji: "💀" },
-            { id: 13, title: "When we spend hours talking about absolutely nothing", image: "images/meme13.jpg", emoji: "💬" },
-            { id: 14, title: "Navanshi's mood changes within 5 seconds", image: "images/meme14.jpg", emoji: "🎭" },
-            { id: 15, title: "Me realizing I get to celebrate 15 with her!", image: "images/meme15.jpg", emoji: "🎉" }
+        /* --- STARS & WAVE CANVAS ANIMATION --- */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height, stars = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((width * height) / 3000);
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005,
+                    twinkleDir: Math.random() > 0.5 ? 1 : -1
+                });
+            }
+        }
+
+        function drawBackground() {
+            const grad = ctx.createLinearGradient(0, 0, 0, height);
+            grad.addColorStop(0, '#0f051d');
+            grad.addColorStop(0.5, '#1a0933');
+            grad.addColorStop(1, '#090212');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed * star.twinkleDir;
+                if (star.alpha >= 1) { star.alpha = 1; star.twinkleDir = -1; }
+                if (star.alpha <= 0.2) { star.alpha = 0.2; star.twinkleDir = 1; }
+
+                ctx.save();
+                ctx.globalAlpha = star.alpha;
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#ffb6c1';
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            const time = Date.now() * 0.001;
+            drawWave(time, 0.002, 40, '#ff1493', 0.08);
+            drawWave(time + 2, 0.003, 30, '#8a2be2', 0.06);
+
+            requestAnimationFrame(drawBackground);
+        }
+
+        function drawWave(time, speed, amplitude, color, alpha) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(0, height * 0.7);
+            for (let x = 0; x <= width; x += 10) {
+                const y = Math.sin(x * speed + time) * amplitude + Math.cos(x * 0.001 + time) * (amplitude / 2) + (height * 0.7);
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.globalAlpha = alpha;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        drawBackground();
+
+        /* --- MEME GRID DATA GENERATOR --- */
+        const memesData = [
+            { id: 1, title: "Meme #1", file: "meme1.jpg" },
+            { id: 2, title: "Meme #2", file: "meme2.jpg" },
+            { id: 3, title: "Meme #3", file: "meme3.jpg" },
+            { id: 4, title: "Meme #4", file: "meme4.jpg" },
+            { id: 5, title: "Meme #5", file: "meme5.jpg" },
+            { id: 6, title: "Meme #6", file: "meme6.jpg" },
+            { id: 7, title: "Meme #7", file: "meme7.jpg" },
+            { id: 8, title: "Meme #8", file: "meme8.jpg" },
+            { id: 9, title: "Meme #9", file: "meme9.jpg" },
+            { id: 10, title: "Meme #10", file: "meme10.jpg" },
+            { id: 11, title: "Meme #11", file: "meme11.jpg" },
+            { id: 12, title: "Meme #12", file: "meme12.jpg" },
+            { id: 13, title: "Meme #13", file: "meme13.jpg" },
+            { id: 14, title: "Meme #14", file: "meme14.jpg" },
+            { id: 15, title: "Meme #15", file: "meme15.jpg" }
         ];
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const grid = document.getElementById("memeGrid");
-            const modal = document.getElementById("lightboxModal");
-            const closeBtn = document.getElementById("lightboxClose");
-            const imgWrapper = document.getElementById("lightboxImgWrapper");
-            const numEl = document.getElementById("lightboxNum");
-            const captionEl = document.getElementById("lightboxCaption");
+        const memeGrid = document.getElementById("memeGrid");
 
-            // Render 15 Meme Cards
-            MEMES_DATA.forEach(meme => {
-                const card = document.createElement("div");
-                card.className = "meme-card";
-                card.innerHTML = `
-                    <div class="meme-img-container">
-                        <!-- Fallback to Emoji icon if image file isn't uploaded yet -->
-                        <img src="${meme.image}" alt="Meme #${meme.id}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="meme-placeholder-icon" style="display:none;">${meme.emoji}</span>
+        memesData.forEach(meme => {
+            const card = document.createElement("div");
+            card.className = "meme-card";
+
+            card.innerHTML = `
+                <div class="meme-img-container" onclick="openLightbox('${meme.file}', '${meme.title}')">
+                    <img src="${meme.file}" alt="${meme.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="meme-placeholder-text" style="display:none;">
+                        📷<br>${meme.title}<br><span style="font-size:0.8rem; font-weight:normal;">(Add ${meme.file})</span>
                     </div>
-                    <div class="meme-number">Meme #${meme.id}</div>
-                    <div class="meme-caption">${meme.title}</div>
-                `;
+                </div>
+                <div class="meme-caption">${meme.title}</div>
+                <div class="reaction-bar">
+                    <button class="react-btn" onclick="reactMeme(this, '❤️')">❤️ <span class="count">0</span></button>
+                    <button class="react-btn" onclick="reactMeme(this, '😂')">😂 <span class="count">0</span></button>
+                </div>
+            `;
 
-                // Open Lightbox on click
-                card.addEventListener("click", () => {
-                    numEl.innerText = `Meme #${meme.id}`;
-                    captionEl.innerText = meme.title;
-                    
-                    imgWrapper.innerHTML = `
-                        <img src="${meme.image}" alt="Meme #${meme.id}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span style="display:none; font-size:6rem;">${meme.emoji}</span>
-                    `;
-
-                    modal.classList.add("active");
-                    if (typeof triggerConfettiBurst === "function") triggerConfettiBurst();
-                });
-
-                grid.appendChild(card);
-            });
-
-            // Close Lightbox
-            const closeModal = () => modal.classList.remove("active");
-            closeBtn.addEventListener("click", closeModal);
-            modal.addEventListener("click", (e) => {
-                if (e.target === modal) closeModal();
-            });
+            memeGrid.appendChild(card);
         });
+
+        /* --- LIGHTBOX & REACTIONS --- */
+        function openLightbox(imgSrc, title) {
+            const modal = document.getElementById("lightboxModal");
+            const img = document.getElementById("lightboxImg");
+            img.src = imgSrc;
+            modal.classList.add("active");
+        }
+
+        function closeLightbox() {
+            document.getElementById("lightboxModal").classList.remove("active");
+        }
+
+        function reactMeme(btn, emoji) {
+            const countElem = btn.querySelector('.count');
+            countElem.innerText = parseInt(countElem.innerText) + 1;
+            
+            // Pop floating emoji animation
+            const pop = document.createElement("span");
+            pop.innerText = emoji;
+            pop.style.position = "fixed";
+            const rect = btn.getBoundingClientRect();
+            pop.style.left = `${rect.left + 10}px`;
+            pop.style.top = `${rect.top - 10}px`;
+            pop.style.fontSize = "1.5rem";
+            pop.style.pointerEvents = "none";
+            pop.style.transition = "all 0.8s ease-out";
+            pop.style.zIndex = "999";
+            document.body.appendChild(pop);
+
+            setTimeout(() => {
+                pop.style.transform = "translateY(-40px) scale(1.3)";
+                pop.style.opacity = "0";
+            }, 50);
+
+            setTimeout(() => { pop.remove(); }, 850);
+        }
     </script>
 </body>
 </html>
