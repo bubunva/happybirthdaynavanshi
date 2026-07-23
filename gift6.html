@@ -166,19 +166,6 @@
             transition: transform 0.4s ease;
         }
 
-        .meme-caption {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.35rem;
-            text-align: center;
-            color: #fff;
-            margin-bottom: 1.5rem;
-            line-height: 1.4;
-            min-height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         .controls-row {
             display: flex;
             gap: 20px;
@@ -256,19 +243,15 @@
         <header class="page-header">
             <span class="page-badge">Gift #6 • Custom Meme Vault</span>
             <h1 class="page-title">Meme Gallery 😂</h1>
-            <p class="page-subtitle">15 hand-crafted memes made personally just for you!</p>
+            <p class="page-subtitle">14 hand-crafted memes made personally just for you!</p>
         </header>
 
         <!-- Slideshow Card -->
         <div class="slideshow-card">
-            <div class="meme-counter" id="memeCounter">Meme 1 of 15</div>
+            <div class="meme-counter" id="memeCounter">Meme 1 of 14</div>
             
             <div class="meme-frame">
-                <img id="memeImg" src="meme1.jpg" alt="Custom Meme">
-            </div>
-
-            <div class="meme-caption" id="memeCaption">
-                "Caption placeholder for Meme #1"
+                <img id="memeImg" src="meme1.png" alt="Custom Meme">
             </div>
 
             <div class="controls-row">
@@ -361,23 +344,22 @@
         resize();
         drawBackground();
 
-        /* --- 15 MEMES DATA ARRAY --- */
+        /* --- 14 MEMES DATA ARRAY --- */
         const memes = [
-            { img: "meme1.jpg", caption: "When you try to look serious but remember an inside joke 💀" },
-            { img: "meme2.jpg", caption: "Navanshi waiting for me to reply after taking 2 seconds" },
-            { img: "meme3.jpg", caption: "Me pretending I know what's going on:" },
-            { img: "meme4.jpg", caption: "POV: You're being extremely pretty for no reason" },
-            { img: "meme5.jpg", caption: "When someone says something funny and you look right at you" },
-            { img: "meme6.jpg", caption: "Our brain cells working overtime at 3 AM" },
-            { img: "meme7.jpg", caption: "Accuracy level: 100%" },
-            { img: "meme8.jpg", caption: "When the food arrives and peace is restored" },
-            { img: "meme9.jpg", caption: "You: *exists* \n Me: 🥰✨" },
-            { img: "meme10.jpg", caption: "That one face you make when you know you're right" },
-            { img: "meme11.jpg", caption: "Attempting to be productive vs reality" },
-            { img: "meme12.jpg", caption: "When your favorite song starts playing" },
-            { img: "meme13.jpg", caption: "Mood when everything is going perfectly" },
-            { img: "meme14.jpg", caption: "Caught in 4K being adorable" },
-            { img: "meme15.jpg", caption: "Happy 15th Birthday to my favorite person! 🎉" }
+            { img: "meme1.png" },
+            { img: "meme2.png" },
+            { img: "meme3.png" },
+            { img: "meme4.png" },
+            { img: "meme5.png" },
+            { img: "meme6.png" },
+            { img: "meme7.png" },
+            { img: "meme8.png" },
+            { img: "meme9.png" },
+            { img: "meme10.png" },
+            { img: "meme11.png" },
+            { img: "meme12.png" },
+            { img: "meme13.png" },
+            { img: "meme14.png" }
         ];
 
         let currentMemeIdx = 0;
@@ -404,7 +386,6 @@
 
             document.getElementById("memeCounter").innerText = `Meme ${currentMemeIdx + 1} of ${memes.length}`;
             document.getElementById("memeImg").src = m.img;
-            document.getElementById("memeCaption").innerText = `"${m.caption}"`;
 
             // Update dots
             const dots = document.querySelectorAll(".dot");
