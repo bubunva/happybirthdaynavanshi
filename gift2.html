@@ -400,14 +400,13 @@
         resize();
         drawBackground();
 
-        /* --- DYNAMICALLY GENERATE ALL 169 PHOTOS FROM ROOT DIRECTORY --- */
+        /* --- DYNAMICALLY GENERATE ALL 169 PHOTOS USING 'p (i).png' --- */
         const memeGrid = document.getElementById("memeGrid");
         const totalPhotos = 169;
 
         for (let i = 1; i <= totalPhotos; i++) {
             const card = document.createElement("div");
             card.className = "meme-card";
-            // Stagger animation delay slightly for cascading appearance
             card.style.animationDelay = `${(i % 20) * 0.03}s`;
 
             const fileName = `p (${i}).png`;
@@ -446,7 +445,6 @@
             const countElem = btn.querySelector('.count');
             countElem.innerText = parseInt(countElem.innerText) + 1;
             
-            // Pop floating emoji animation
             const pop = document.createElement("span");
             pop.innerText = emoji;
             pop.style.position = "fixed";
