@@ -443,7 +443,7 @@
             ctx.fillStyle = color;
             ctx.globalAlpha = alpha;
             ctx.fill();
-            ctx.restore();
+            ctx.restrictions = ctx.restore();
         }
 
         window.addEventListener('resize', resize);
@@ -453,11 +453,11 @@
         /* --- PLAYLIST DATA & AUDIO LOGIC --- */
         const tracks = [
             {
-                title: "Song Title 1",
-                artist: "Artist 1",
-                file: "song1.mp3",
+                title: "Risky",
+                artist: "Navanshi's Special",
+                file: "Risky.mp3",
                 icon: "🎧",
-                note: "💭 [TYPE YOUR NOTE HERE: Explain why Song #1 reminds you of Navanshi!]"
+                note: "💭 [TYPE YOUR NOTE HERE: Explain why Risky reminds you of Navanshi!]"
             },
             {
                 title: "Song Title 2",
