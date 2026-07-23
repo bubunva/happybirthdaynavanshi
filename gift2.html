@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Gift #2 — 15 Special Memes | Navanshi’s 15th</title>
+    <title>Gift #2 — Golden Memories (169 Photos) | Navanshi’s 15th</title>
     
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,7 +42,7 @@
         .gift-container {
             min-height: 100vh;
             padding: 100px 20px 80px 20px;
-            max-width: 1100px;
+            max-width: 1300px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -69,7 +69,7 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -119,11 +119,11 @@
             opacity: 0.85;
         }
 
-        /* Meme Grid */
+        /* Photo Grid */
         .meme-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
             width: 100%;
         }
 
@@ -132,14 +132,24 @@
             backdrop-filter: blur(25px) saturate(180%);
             -webkit-backdrop-filter: blur(25px) saturate(180%);
             border: 1px solid rgba(255, 192, 203, 0.25);
-            border-radius: 24px;
-            padding: 1.2rem;
+            border-radius: 20px;
+            padding: 0.8rem;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .meme-card:hover {
@@ -150,8 +160,8 @@
 
         .meme-img-container {
             width: 100%;
-            height: 250px;
-            border-radius: 16px;
+            height: 200px;
+            border-radius: 14px;
             overflow: hidden;
             background: rgba(0, 0, 0, 0.3);
             display: flex;
@@ -165,16 +175,16 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .meme-card:hover .meme-img-container img {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .meme-placeholder-text {
             color: #ffb6c1;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             text-align: center;
             padding: 1rem;
@@ -182,9 +192,9 @@
 
         .meme-caption {
             font-family: 'Playfair Display', serif;
-            font-size: 1.15rem;
+            font-size: 1rem;
             color: #fff;
-            margin: 1rem 0 0.8rem 0;
+            margin: 0.8rem 0 0.5rem 0;
             font-weight: 600;
             text-align: center;
         }
@@ -194,7 +204,7 @@
             display: flex;
             justify-content: space-around;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 0.8rem;
+            padding-top: 0.6rem;
             margin-top: auto;
         }
 
@@ -202,13 +212,13 @@
             background: transparent;
             border: none;
             color: #ffb6c1;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: transform 0.2s ease, color 0.2s ease;
+            gap: 5px;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease, background 0.2s ease;
             padding: 4px 8px;
             border-radius: 12px;
         }
@@ -219,33 +229,44 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Lightbox Modal */
+        /* Lightbox Modal with Smooth Transition */
         .lightbox-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(15, 5, 29, 0.92);
-            backdrop-filter: blur(20px);
+            background: rgba(15, 5, 29, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             z-index: 1000;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .lightbox-modal.active {
-            display: flex;
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .lightbox-content {
             max-width: 90%;
             max-height: 85vh;
             border-radius: 20px;
-            box-shadow: 0 0 50px rgba(255, 105, 180, 0.4);
+            box-shadow: 0 0 60px rgba(255, 105, 180, 0.4);
             border: 2px solid rgba(255, 182, 193, 0.5);
             object-fit: contain;
+            transform: scale(0.92);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .lightbox-modal.active .lightbox-content {
+            transform: scale(1);
         }
 
         .lightbox-close {
@@ -255,17 +276,18 @@
             color: #fff;
             font-size: 2.5rem;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, color 0.2s ease;
         }
 
         .lightbox-close:hover {
-            transform: scale(1.2);
+            transform: scale(1.2) rotate(90deg);
             color: #ff69b4;
         }
 
         @media (max-width: 600px) {
             .page-title { font-size: 2.1rem; }
-            .meme-img-container { height: 210px; }
+            .meme-img-container { height: 170px; }
+            .meme-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
         }
     </style>
 </head>
@@ -283,19 +305,19 @@
 
     <div class="gift-container">
         <header class="page-header">
-            <span class="page-badge">Gift #2 • Made By Me</span>
-            <h1 class="page-title">15 Special Memes 🤣</h1>
-            <p class="page-subtitle">Handcrafted memes created exclusively for Navanshi’s 15th Birthday!</p>
+            <span class="page-badge">Gift #2 • Golden Memories</span>
+            <h1 class="page-title">169 Special Moments 📸</h1>
+            <p class="page-subtitle">A collection of 169 beautiful memories curated for Navanshi’s 15th Birthday!</p>
         </header>
 
-        <!-- 15 Memes Grid -->
+        <!-- 169 Photos Grid -->
         <div class="meme-grid" id="memeGrid"></div>
     </div>
 
     <!-- Fullscreen Lightbox -->
     <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
         <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="lightboxImg" src="" alt="Zoomed Meme">
+        <img class="lightbox-content" id="lightboxImg" src="" alt="Zoomed Memory">
     </div>
 
     <script>
@@ -378,47 +400,35 @@
         resize();
         drawBackground();
 
-        /* --- MEME GRID DATA GENERATOR --- */
-        const memesData = [
-            { id: 1, title: "Meme #1", file: "meme1.jpg" },
-            { id: 2, title: "Meme #2", file: "meme2.jpg" },
-            { id: 3, title: "Meme #3", file: "meme3.jpg" },
-            { id: 4, title: "Meme #4", file: "meme4.jpg" },
-            { id: 5, title: "Meme #5", file: "meme5.jpg" },
-            { id: 6, title: "Meme #6", file: "meme6.jpg" },
-            { id: 7, title: "Meme #7", file: "meme7.jpg" },
-            { id: 8, title: "Meme #8", file: "meme8.jpg" },
-            { id: 9, title: "Meme #9", file: "meme9.jpg" },
-            { id: 10, title: "Meme #10", file: "meme10.jpg" },
-            { id: 11, title: "Meme #11", file: "meme11.jpg" },
-            { id: 12, title: "Meme #12", file: "meme12.jpg" },
-            { id: 13, title: "Meme #13", file: "meme13.jpg" },
-            { id: 14, title: "Meme #14", file: "meme14.jpg" },
-            { id: 15, title: "Meme #15", file: "meme15.jpg" }
-        ];
-
+        /* --- DYNAMICALLY GENERATE ALL 169 PHOTOS FROM "Nav Pic" FOLDER --- */
         const memeGrid = document.getElementById("memeGrid");
+        const totalPhotos = 169;
 
-        memesData.forEach(meme => {
+        for (let i = 1; i <= totalPhotos; i++) {
             const card = document.createElement("div");
             card.className = "meme-card";
+            // Stagger animation delay slightly for cascading appearance
+            card.style.animationDelay = `${(i % 20) * 0.03}s`;
+
+            const fileName = `Nav Pic/p (${i}).jpg`;
+            const title = `Memory #${i}`;
 
             card.innerHTML = `
-                <div class="meme-img-container" onclick="openLightbox('${meme.file}', '${meme.title}')">
-                    <img src="${meme.file}" alt="${meme.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="meme-img-container" onclick="openLightbox('${fileName}', '${title}')">
+                    <img src="${fileName}" alt="${title}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     <div class="meme-placeholder-text" style="display:none;">
-                        📷<br>${meme.title}<br><span style="font-size:0.8rem; font-weight:normal;">(Add ${meme.file})</span>
+                        📷<br>${title}<br><span style="font-size:0.75rem; font-weight:normal;">(Missing file)</span>
                     </div>
                 </div>
-                <div class="meme-caption">${meme.title}</div>
+                <div class="meme-caption">${title}</div>
                 <div class="reaction-bar">
                     <button class="react-btn" onclick="reactMeme(this, '❤️')">❤️ <span class="count">0</span></button>
-                    <button class="react-btn" onclick="reactMeme(this, '😂')">😂 <span class="count">0</span></button>
+                    <button class="react-btn" onclick="reactMeme(this, '✨')">✨ <span class="count">0</span></button>
                 </div>
             `;
 
             memeGrid.appendChild(card);
-        });
+        }
 
         /* --- LIGHTBOX & REACTIONS --- */
         function openLightbox(imgSrc, title) {
@@ -445,12 +455,12 @@
             pop.style.top = `${rect.top - 10}px`;
             pop.style.fontSize = "1.5rem";
             pop.style.pointerEvents = "none";
-            pop.style.transition = "all 0.8s ease-out";
+            pop.style.transition = "all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
             pop.style.zIndex = "999";
             document.body.appendChild(pop);
 
             setTimeout(() => {
-                pop.style.transform = "translateY(-40px) scale(1.3)";
+                pop.style.transform = "translateY(-50px) scale(1.4)";
                 pop.style.opacity = "0";
             }, 50);
 
