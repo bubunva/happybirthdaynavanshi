@@ -400,7 +400,7 @@
         resize();
         drawBackground();
 
-        /* --- DYNAMICALLY GENERATE ALL 169 PHOTOS FROM "Nav Pic" FOLDER --- */
+        /* --- DYNAMICALLY GENERATE ALL 169 PHOTOS FROM ROOT DIRECTORY --- */
         const memeGrid = document.getElementById("memeGrid");
         const totalPhotos = 169;
 
@@ -410,7 +410,7 @@
             // Stagger animation delay slightly for cascading appearance
             card.style.animationDelay = `${(i % 20) * 0.03}s`;
 
-            const fileName = `Nav Pic/p (${i}).jpg`;
+            const fileName = `p (${i}).png`;
             const title = `Memory #${i}`;
 
             card.innerHTML = `
