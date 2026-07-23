@@ -443,7 +443,7 @@
             ctx.fillStyle = color;
             ctx.globalAlpha = alpha;
             ctx.fill();
-            ctx.restrictions = ctx.restore();
+            ctx.restore();
         }
 
         window.addEventListener('resize', resize);
@@ -460,25 +460,25 @@
                 note: "💭 [TYPE YOUR NOTE HERE: Explain why Risky reminds you of Navanshi!]"
             },
             {
-                title: "Song Title 2",
-                artist: "Artist 2",
-                file: "song2.mp3",
+                title: "PrettyBoy",
+                artist: "Navanshi's Special",
+                file: "PrettyBoy.mp3",
                 icon: "✨",
-                note: "💭 [TYPE YOUR NOTE HERE: Explain why Song #2 reminds you of Navanshi!]"
+                note: "💭 [TYPE YOUR NOTE HERE: Explain why PrettyBoy reminds you of Navanshi!]"
             },
             {
-                title: "Song Title 3",
-                artist: "Artist 3",
-                file: "song3.mp3",
-                icon: "💖",
-                note: "💭 [TYPE YOUR NOTE HERE: Explain why Song #3 reminds you of Navanshi!]"
+                title: "Butterflies",
+                artist: "Navanshi's Special",
+                file: "Butterflies.mp3",
+                icon: "🦋",
+                note: "💭 [TYPE YOUR NOTE HERE: Explain why Butterflies reminds you of Navanshi!]"
             },
             {
-                title: "Song Title 4",
-                artist: "Artist 4",
-                file: "song4.mp3",
-                icon: "🌟",
-                note: "💭 [TYPE YOUR NOTE HERE: Explain why Song #4 reminds you of Navanshi!]"
+                title: "Crashing",
+                artist: "Navanshi's Special",
+                file: "Crashing.mp3",
+                icon: "💫",
+                note: "💭 [TYPE YOUR NOTE HERE: Explain why Crashing reminds you of Navanshi!]"
             }
         ];
 
@@ -540,7 +540,6 @@
                 document.getElementById("playBtn").innerText = "⏸️";
                 document.getElementById("vinylDisc").classList.add("playing");
             }).catch(() => {
-                // If MP3 file is not dropped in yet
                 isPlaying = true;
                 document.getElementById("playBtn").innerText = "⏸️";
                 document.getElementById("vinylDisc").classList.add("playing");
